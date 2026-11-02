@@ -29,3 +29,4 @@ class DocumentChunk(Base, TimestampMixin):
             "(document_id IS NOT NULL) <> (vacancy_id IS NOT NULL)", name="ck_chunk_one_source"
         ),
     )
+

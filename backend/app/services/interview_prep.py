@@ -50,3 +50,4 @@ def prepare_session(db: Session, application: Application) -> InterviewSession:
         )
     db.refresh(session)
     return session
+

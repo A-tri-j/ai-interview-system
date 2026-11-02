@@ -78,3 +78,4 @@ def retrieve(
         .limit(k or settings.RAG_TOP_K).all()
     )
     return [r.text for r in rows]
+

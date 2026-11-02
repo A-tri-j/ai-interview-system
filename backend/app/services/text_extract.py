@@ -31,3 +31,4 @@ def extract_text(path: Path) -> str:
         # Scan kora (chhobi) PDF-e text thake na. OCR ekhon support kori na.
         raise ValueError("No readable text found in the CV")
     return text[:MAX_CHARS]
+

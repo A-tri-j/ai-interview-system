@@ -176,3 +176,4 @@ def generate_followups(
     if not accepted:
         raise QuestionGenerationError("Could not generate follow-up questions")
     return accepted[:count]
+

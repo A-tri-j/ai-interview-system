@@ -50,3 +50,4 @@ def prepare(
             for q in session.questions if q.kind == "initial"
         ],
     }
+

@@ -20,3 +20,4 @@ def embed_texts(texts: list[str]) -> list[list[float]]:
 def embed_query(text: str) -> list[float]:
     # Query-r jonno alada method (retrieval-e bhalo kaj kore)
     return [float(x) for x in next(iter(_get().query_embed(text)))]
+

@@ -39,3 +39,4 @@ def chat_json(system: str, user: str, *, temperature: float = 0.4,
             time.sleep(1 + attempt)
     logger.error("Groq failed after retries: %s", last)
     raise AIUnavailable("The AI service is busy. Please try again shortly.")
+
