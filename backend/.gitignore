@@ -7,3 +7,5 @@ __pycache__/
 uploads/
 node_modules/
 dist/
+test_result.txt
+app_result.txt

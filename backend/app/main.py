@@ -3,12 +3,23 @@ from fastapi.middleware.cors import CORSMiddleware
 from sqlalchemy import text
 from sqlalchemy.orm import Session
 
+from app.api import (
+    admin,
+    applications,
+    auth,
+    candidates,
+    company_auth,
+    decisions,
+    interviews,
+    password_reset,
+    session,
+    vacancies,
+)
 from app.core.config import settings
 from app.database.session import get_db
 
 app = FastAPI(title=settings.APP_NAME)
 
-# Shudhu amader frontend-ke API use korte dibo
 app.add_middleware(
     CORSMiddleware,
     allow_origins=settings.cors_origins,
@@ -17,18 +28,26 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+app.include_router(auth.router)
+app.include_router(company_auth.router)
+app.include_router(password_reset.router)
+app.include_router(session.router)
+app.include_router(admin.router)
+app.include_router(vacancies.public_router)
+app.include_router(vacancies.company_router)
+app.include_router(candidates.router)
+app.include_router(applications.candidate_router)
+app.include_router(applications.company_router)
+app.include_router(decisions.router)
+app.include_router(interviews.router)
+
 
 @app.get("/")
 def root():
-    return {
-        "message": f"Welcome to {settings.APP_NAME} API",
-        "docs": "/docs",
-        "health": "/health",
-    }
+    return {"name": settings.APP_NAME, "status": "running"}
 
 
 @app.get("/health")
 def health(db: Session = Depends(get_db)):
-    """Server ar database thik ache kina check kore (Render health check-e kaje lagbe)."""
     db.execute(text("SELECT 1"))
     return {"status": "ok", "database": "connected"}

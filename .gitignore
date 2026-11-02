@@ -58,3 +58,9 @@ build/
 .DS_Store
 Thumbs.db
 
+# Test & log outputs
+test_result.txt
+app_result.txt
+uploads/
+
+

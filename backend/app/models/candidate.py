@@ -19,6 +19,7 @@ class Candidate(Base, TimestampMixin):
     is_email_verified: Mapped[bool] = mapped_column(Boolean, default=False)
     is_active: Mapped[bool] = mapped_column(Boolean, default=True)
     last_login_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
+    password_changed_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
 
     profile: Mapped["CandidateProfile"] = relationship(
         back_populates="candidate", uselist=False, cascade="all, delete-orphan"

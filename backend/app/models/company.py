@@ -36,4 +36,5 @@ class Company(Base, TimestampMixin):
         String(30), default=CompanyStatus.PENDING_VERIFICATION, index=True
     )
     last_login_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
+    password_changed_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
 
