@@ -5,15 +5,19 @@ from sqlalchemy.orm import Session
 
 from app.api import (
     admin,
+    admin_extra,
     applications,
     auth,
+    candidate_privacy,
     candidates,
     company_auth,
+    company_profile,
     decisions,
     interview_flow,
     interviews,
     password_reset,
     recordings,
+    reports,
     session,
     vacancies,
 )
@@ -44,6 +48,11 @@ app.include_router(decisions.router)
 app.include_router(interviews.router)
 app.include_router(interview_flow.router)
 app.include_router(recordings.router)
+app.include_router(reports.router)
+app.include_router(candidate_privacy.router)
+app.include_router(candidate_privacy.result_router)
+app.include_router(company_profile.router)
+app.include_router(admin_extra.router)
 
 
 @app.get("/")

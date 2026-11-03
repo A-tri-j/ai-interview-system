@@ -54,3 +54,4 @@ def transcribe(data: bytes, filename: str) -> tuple[str, list[dict]]:
 
     logger.error("Whisper failed after retries: %s", last)
     raise AIUnavailable("Transcription service is busy")
+

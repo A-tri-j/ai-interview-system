@@ -69,3 +69,4 @@ def sniff(data: bytes) -> tuple[str, str] | None:
     if data[:4] == b"OggS":
         return "audio/ogg", ".ogg"
     return None
+

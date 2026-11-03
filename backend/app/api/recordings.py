@@ -120,3 +120,4 @@ def recording_file(
     if not path.exists():
         raise HTTPException(404, "Recording file not found")
     return FileResponse(path, media_type=r.content_type, headers={"X-Content-Type-Options": "nosniff"})
+

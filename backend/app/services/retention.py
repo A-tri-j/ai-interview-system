@@ -30,3 +30,4 @@ def purge_expired(db) -> int:
 if __name__ == "__main__":
     with SessionLocal() as session:
         print("Deleted recordings:", purge_expired(session))
+

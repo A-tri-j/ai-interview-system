@@ -55,6 +55,9 @@ class Settings(BaseSettings):
     WHISPER_MODEL: str = "whisper-large-v3-turbo"
     WHISPER_LANGUAGE: str = "en"  # faka dile auto-detect
 
+    # Candidate nijer interview-er summary dekhte parbe kina
+    CANDIDATE_SEE_REPORT: bool = True
+
     # Gmail SMTP
     SMTP_HOST: str = "smtp.gmail.com"
     SMTP_PORT: int = 587

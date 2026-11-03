@@ -17,6 +17,7 @@ from sqlalchemy.exc import IntegrityError
 from sqlalchemy.orm import Session, joinedload, selectinload
 
 from app.ai import transcribe as stt
+from app.ai.evaluation import run_evaluation
 from app.ai.groq_client import AIUnavailable
 from app.ai.question_service import QuestionGenerationError, generate_followups
 from app.api.applications import _notify_once
@@ -433,6 +434,10 @@ def submit_interview(
                 f"<p>We received your interview for <b>{html.escape(app.vacancy.title)}</b>. "
                 f"The company will review it and contact you.</p>",
             )
+    session_id = session.id
     db.commit()
-    # Chunk D: ekhane AI evaluation shuru hobe
-    return {"status": session.status, "message": "Interview submitted. Thank you!"}
+    # Response-er por background-e evaluation chole. Fail hole company retry korte pare.
+    background.add_task(run_evaluation, session_id)
+    return {"status": InterviewSessionStatus.SUBMITTED,
+            "message": "Interview submitted. Thank you!"}
+
