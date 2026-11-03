@@ -10,8 +10,10 @@ from app.api import (
     candidates,
     company_auth,
     decisions,
+    interview_flow,
     interviews,
     password_reset,
+    recordings,
     session,
     vacancies,
 )
@@ -40,6 +42,8 @@ app.include_router(applications.candidate_router)
 app.include_router(applications.company_router)
 app.include_router(decisions.router)
 app.include_router(interviews.router)
+app.include_router(interview_flow.router)
+app.include_router(recordings.router)
 
 
 @app.get("/")

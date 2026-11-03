@@ -86,6 +86,7 @@ def sent_emails(monkeypatch):
         "app.api.applications",
         "app.api.password_reset",
         "app.api.decisions",
+        "app.api.interview_flow",
     ):
         monkeypatch.setattr(f"{module}.send_email", fake_send)
     # OTP sobsomoy 123456 hoye jak

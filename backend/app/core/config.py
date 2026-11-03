@@ -40,6 +40,21 @@ class Settings(BaseSettings):
     CHUNK_OVERLAP: int = 120
     RAG_TOP_K: int = 6
 
+    # Recording, storage, transcription
+    R2_ACCOUNT_ID: str = ""
+    R2_ACCESS_KEY_ID: str = ""
+    R2_SECRET_ACCESS_KEY: str = ""
+    R2_BUCKET: str = ""
+    SIGNED_URL_SECONDS: int = 600
+    MAX_RECORDING_MB: int = 24  # Groq Whisper-er 25 MB limit-er niche
+    MAX_ANSWER_SECONDS: int = 45  # frontend timer-er jonno
+    FOLLOWUP_COUNT: int = 5  # 5 theke 7
+    RECORDING_RETENTION_DAYS: int = 90
+    CONSENT_VERSION: str = "v1"
+    NOTIFY_INTERVIEW_DONE: bool = False  # interview shesh-er email (default off)
+    WHISPER_MODEL: str = "whisper-large-v3-turbo"
+    WHISPER_LANGUAGE: str = "en"  # faka dile auto-detect
+
     # Gmail SMTP
     SMTP_HOST: str = "smtp.gmail.com"
     SMTP_PORT: int = 587
@@ -58,6 +73,10 @@ class Settings(BaseSettings):
             and self.SMTP_APP_PASSWORD
             and self.SMTP_APP_PASSWORD != "your-app-password"
         )
+
+    @property
+    def r2_configured(self) -> bool:
+        return all([self.R2_ACCOUNT_ID, self.R2_ACCESS_KEY_ID, self.R2_SECRET_ACCESS_KEY, self.R2_BUCKET])
 
 
 settings = Settings()

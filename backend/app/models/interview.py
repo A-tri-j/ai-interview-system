@@ -34,6 +34,7 @@ class InterviewSession(Base, TimestampMixin):
     target_minutes: Mapped[int] = mapped_column(Integer, default=6)
     consent_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
     consent_version: Mapped[str | None] = mapped_column(String(20))
+    recording_mode: Mapped[str | None] = mapped_column(String(10))  # video / audio
     started_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
     submitted_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
     expires_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
@@ -103,6 +104,9 @@ class InterviewRecording(Base, TimestampMixin):
     id: Mapped[int] = mapped_column(primary_key=True)
     session_id: Mapped[int] = mapped_column(
         ForeignKey("interview_sessions.id", ondelete="CASCADE"), index=True
+    )
+    question_id: Mapped[int | None] = mapped_column(
+        ForeignKey("interview_questions.id", ondelete="CASCADE"), unique=True
     )
     storage_key: Mapped[str] = mapped_column(String(500))
     content_type: Mapped[str] = mapped_column(String(100))
