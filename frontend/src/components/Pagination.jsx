@@ -13,3 +13,4 @@ export default function Pagination({ page, pageSize, total, onChange }) {
     </nav>
   )
 }
+

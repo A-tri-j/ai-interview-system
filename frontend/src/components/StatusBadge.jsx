@@ -15,3 +15,4 @@ export default function StatusBadge({ status }) {
   const [label, tone] = MAP[status] || [status, '']
   return <span className={`badge ${tone ? `badge-${tone}` : ''}`}>{label}</span>
 }
+

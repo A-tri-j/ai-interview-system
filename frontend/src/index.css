@@ -235,3 +235,20 @@ input[type='file'] { padding: 8px; }
 .doc-list { list-style: none; padding: 0; margin: 0 0 14px; }
 .doc-list li { display: flex; justify-content: space-between; gap: 8px; flex-wrap: wrap; padding: 8px 0; border-bottom: 1px solid var(--border); overflow-wrap: anywhere; }
 .danger-zone { border-color: var(--danger); }
+
+
+/* ---------- Part 4 additions ---------- */
+.tabs a.tab { text-decoration: none; }
+.tabs a.tab.active { color: var(--accent); border-bottom-color: var(--accent); }
+.stat { text-align: center; }
+.stat-num { font-size: 2rem; font-weight: 800; color: var(--accent); line-height: 1.1; }
+.plain-fieldset { border: 0; padding: 0; margin: 0 0 8px; min-width: 0; }
+.plain-fieldset:disabled { opacity: 0.6; }
+.kv { display: grid; grid-template-columns: minmax(0, 1fr); gap: 2px 16px; margin: 0 0 16px; }
+.kv dt { font-weight: 600; color: var(--muted); font-size: 0.85rem; margin-top: 10px; }
+.kv dd { margin: 0; overflow-wrap: anywhere; }
+@media (min-width: 700px) {
+  .kv { grid-template-columns: 140px minmax(0, 1fr); }
+  .kv dt { margin-top: 0; padding-top: 2px; }
+  .kv dd { margin-bottom: 8px; }
+}

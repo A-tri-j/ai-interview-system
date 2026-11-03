@@ -79,3 +79,4 @@ export default function VerifyEmail() {
     </div>
   )
 }
+

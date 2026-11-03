@@ -7,3 +7,4 @@ export default function Alert({ type = 'error', children }) {
     </div>
   )
 }
+

@@ -22,3 +22,4 @@ export function ThemeProvider({ children }) {
   const value = useMemo(() => ({ theme, toggle }), [theme, toggle])
   return <ThemeContext.Provider value={value}>{children}</ThemeContext.Provider>
 }
+
