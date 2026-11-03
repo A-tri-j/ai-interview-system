@@ -171,3 +171,4 @@ def retry_evaluation(
         raise HTTPException(409, "Evaluation is already running or finished")
     background.add_task(run_evaluation, session.id, True)
     return {"message": "Evaluation restarted"}
+

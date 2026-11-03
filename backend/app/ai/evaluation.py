@@ -286,3 +286,4 @@ def run_evaluation(session_id: int, force: bool = False) -> None:
                     else "Evaluation could not be completed"
                 )
                 db.commit()
+

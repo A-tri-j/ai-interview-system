@@ -189,3 +189,4 @@ def delete_account(
         except Exception:  # noqa: BLE001
             logger.exception("Orphan CV file left: %s", k)
     return {"message": "Your account and data have been deleted."}
+

@@ -126,3 +126,4 @@ def dashboard(
         "applications_by_status": apps,
         "applications_total": sum(apps.values()),
     }
+
