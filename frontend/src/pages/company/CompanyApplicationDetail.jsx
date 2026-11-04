@@ -19,6 +19,19 @@ const LABEL = {
 }
 const HAS_INTERVIEW = ['interview_completed', 'shortlisted', 'accepted', 'on_hold', 'final_rejected']
 
+function InterviewProgress({ appId }) {
+  const [s, setS] = useState(null)
+  useEffect(() => {
+    api.company.get(`/api/company/applications/${appId}/interview-status`)
+      .then((r) => setS(r.data)).catch(() => {})
+  }, [appId])
+  let text = 'Interview invitation sent. The candidate has not opened the interview yet.'
+  if (s?.consent_declined) text = 'The candidate declined recording. Contact them to arrange an alternative way to complete this step.'
+  else if (s?.session_status === 'in_progress') text = 'The candidate is taking the interview now.'
+  else if (s?.session_status === 'consented') text = 'The candidate accepted the recording consent and has not started yet.'
+  return <Alert type="info">{text}</Alert>
+}
+
 export default function CompanyApplicationDetail() {
   const { id } = useParams()
   const [a, setA] = useState(null)
@@ -141,9 +154,7 @@ export default function CompanyApplicationDetail() {
         </section>
       )}
 
-      {a.status === 'approved_for_interview' && (
-        <Alert type="info">Interview invitation sent. Waiting for the candidate to complete the interview.</Alert>
-      )}
+      {a.status === 'approved_for_interview' && <InterviewProgress appId={a.id} />}
       {HAS_INTERVIEW.includes(a.status) && (
         <section className="card">
           <h2>Interview</h2>

@@ -9,11 +9,14 @@ import CompanyApplications from './pages/company/CompanyApplications'
 import CompanyLogin from './pages/company/CompanyLogin'
 import CompanyOverview from './pages/company/CompanyOverview'
 import CompanyRegister from './pages/company/CompanyRegister'
+import CompanyReport from './pages/company/CompanyReport'
 import CompanyVacancies from './pages/company/CompanyVacancies'
 import CompanyVerify from './pages/company/CompanyVerify'
 import VacancyForm from './pages/company/VacancyForm'
 import ForgotPassword from './pages/ForgotPassword'
 import Home from './pages/Home'
+import Interview from './pages/interview/Interview'
+import InterviewEntry from './pages/interview/InterviewEntry'
 import JobDetail from './pages/JobDetail'
 import Jobs from './pages/Jobs'
 import Login from './pages/Login'
@@ -22,7 +25,7 @@ import Register from './pages/Register'
 import ResetPassword from './pages/ResetPassword'
 import VerifyEmail from './pages/VerifyEmail'
 
-// Interview, report, admin route porer part-e ashbe
+// Admin route Part 6-e ashbe
 export default function App() {
   return (
     <Routes>
@@ -38,6 +41,9 @@ export default function App() {
         <Route path="reset-password" element={<ResetPassword />} />
         <Route path="dashboard" element={<ProtectedRoute role="candidate"><CandidateDashboard /></ProtectedRoute>} />
 
+        <Route path="interview/start/:applicationId" element={<ProtectedRoute role="candidate"><Interview /></ProtectedRoute>} />
+        <Route path="interview/:token" element={<ProtectedRoute role="candidate"><InterviewEntry /></ProtectedRoute>} />
+
         <Route path="company/register" element={<CompanyRegister />} />
         <Route path="company/verify-email" element={<CompanyVerify />} />
         <Route path="company/login" element={<CompanyLogin />} />
@@ -48,6 +54,7 @@ export default function App() {
           <Route path="vacancies/:id/edit" element={<VacancyForm />} />
           <Route path="applications" element={<CompanyApplications />} />
           <Route path="applications/:id" element={<CompanyApplicationDetail />} />
+          <Route path="applications/:id/report" element={<CompanyReport />} />
         </Route>
 
         <Route path="*" element={<NotFound />} />
