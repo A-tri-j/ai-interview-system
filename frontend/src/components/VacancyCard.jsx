@@ -7,9 +7,10 @@ export default function VacancyCard({ v }) {
     <article className="card vacancy-card">
       <div>
         <h3 className="vc-title">
-          <Link to={`/jobs/${v.id}`}>{v.title}</Link>
+          {/* stretched-link: pura card click-joggo hoy */}
+          <Link to={`/jobs/${v.id}`} className="stretched-link">{v.title}</Link>
         </h3>
-        <p className="muted vc-company">{v.company.company_name}</p>
+        <p className="muted vc-company">{v.company?.company_name || v.company}</p>
       </div>
       <div className="badges">
         <span className="badge">{pretty(v.work_mode)}</span>
@@ -27,4 +28,3 @@ export default function VacancyCard({ v }) {
     </article>
   )
 }
-

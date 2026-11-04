@@ -306,3 +306,8 @@ summary { cursor: pointer; color: var(--accent); font-weight: 600; }
 }
 .dialog::backdrop { background: rgba(0, 0, 0, 0.6); }
 .dialog h2 { margin-bottom: 8px; }
+
+
+/* Pura card click-joggo */
+.vacancy-card { position: relative; cursor: pointer; }
+.stretched-link::after { content: ''; position: absolute; inset: 0; }

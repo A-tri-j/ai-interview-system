@@ -56,14 +56,14 @@ export default function JobDetail() {
   if (!job) return null
 
   const skills = [...(job.required_skills || []), ...(job.required_technologies || [])]
-  const site = job.company.website && /^https?:\/\//.test(job.company.website) ? job.company.website : null
+  const site = job.company?.website && /^https?:\/\//.test(job.company.website) ? job.company.website : null
 
   return (
     <div className="container section">
       <div className="detail-layout">
         <div>
           <h1>{job.title}</h1>
-          <p className="muted">{job.company.company_name}{job.department ? ` · ${job.department}` : ''}</p>
+          <p className="muted">{job.company?.company_name || job.company}{job.department ? ` · ${job.department}` : ''}</p>
           <div className="badges" style={{ marginBottom: 20 }}>
             <span className="badge">{pretty(job.work_mode)}</span>
             <span className="badge">{pretty(job.employment_type)}</span>
@@ -91,9 +91,9 @@ export default function JobDetail() {
             {users.candidate ? 'Apply now' : 'Sign in to apply'}
           </Link>
           <hr className="rule" />
-          <h3>{job.company.company_name}</h3>
-          <p className="muted">{job.company.industry} · {job.company.company_size} employees</p>
-          {job.company.description && <p className="prewrap">{job.company.description}</p>}
+          <h3>{job.company?.company_name || job.company}</h3>
+          <p className="muted">{job.company?.industry} · {job.company?.company_size} employees</p>
+          {job.company?.description && <p className="prewrap">{job.company.description}</p>}
           {site && <a href={site} target="_blank" rel="noopener noreferrer nofollow">Company website</a>}
         </aside>
       </div>

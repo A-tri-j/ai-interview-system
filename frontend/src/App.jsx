@@ -34,6 +34,7 @@ import Register from './pages/Register'
 import ResetPassword from './pages/ResetPassword'
 import VerifyEmail from './pages/VerifyEmail'
 
+// Admin route Part 6
 export default function App() {
   return (
     <Routes>
