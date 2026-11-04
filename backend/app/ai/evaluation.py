@@ -105,7 +105,7 @@ def _evaluate_batch(vacancy_text: str, items: list[dict]) -> dict[int, AnswerEva
         '"problem_solving":0-10,"clarity":0-10,"feedback":"...","evidence":["..."]}]} '
         "with exactly one item per question."
     )
-    raw = chat_json(SYSTEM_EVAL, user, temperature=0.1, max_tokens=4000)
+    raw = chat_json(SYSTEM_EVAL, user, temperature=0.1, max_tokens=6000)
     valid = {it["id"] for it in items}
     out: dict[int, AnswerEval] = {}
     for item in raw.get("evaluations") or []:

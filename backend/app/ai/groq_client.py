@@ -13,7 +13,7 @@ class AIUnavailable(Exception):
 
 
 def chat_json(system: str, user: str, *, temperature: float = 0.4,
-              max_tokens: int = 3000, retries: int = 3) -> dict:
+              max_tokens: int = 4000, retries: int = 3) -> dict:
     if not settings.GROQ_API_KEY or settings.GROQ_API_KEY == "your-groq-key":
         raise AIUnavailable("GROQ_API_KEY is not configured")
 
@@ -29,6 +29,7 @@ def chat_json(system: str, user: str, *, temperature: float = 0.4,
                           {"role": "user", "content": user}],
                 temperature=temperature, max_tokens=max_tokens,
                 response_format={"type": "json_object"},
+                reasoning_effort="low",   # gpt-oss: kom reasoning, token bachay
             )
             return json.loads(r.choices[0].message.content)
         except RateLimitError as exc:       # free tier limit: beshi opekkha kori
