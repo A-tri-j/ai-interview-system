@@ -201,6 +201,7 @@ export default function Interview() {
       <div className="card narrow center">
         <h1>Interview submitted</h1>
         <p>Thank you. {s.company_name} will review your interview for {s.job_title}. Your result appears in your dashboard when it is ready.</p>
+        <p><Link to={`/round2/${applicationId}`} className="btn btn-primary">Continue to Round 2: MCQ test</Link></p>
         <Link to="/dashboard" className="btn btn-primary">Go to dashboard</Link>
       </div>,
     )

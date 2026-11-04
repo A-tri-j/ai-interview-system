@@ -7,5 +7,6 @@ from app.models.interview import (
     InterviewAnswer, InterviewQuestion, InterviewRecording,
     InterviewReport, InterviewSession, InterviewSessionStatus,
 )
+from app.models.mcq import McqQuestion, McqStatus, McqTest
 from app.models.misc import AuditLog, EmailVerification, Notification, PasswordResetToken
 from app.models.vacancy import Vacancy, VacancyStatus

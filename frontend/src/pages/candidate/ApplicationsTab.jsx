@@ -138,6 +138,11 @@ export default function ApplicationsTab() {
                 <Link to={`/interview/start/${a.id}`} className="btn btn-primary btn-sm">Start interview</Link>
               </div>
             )}
+            {['interview_completed', 'shortlisted', 'on_hold'].includes(a.status) && (
+              <div className="row-actions">
+                <Link to={`/round2/${a.id}`} className="btn btn-primary btn-sm">Round 2: MCQ test</Link>
+              </div>
+            )}
             {HAS_INTERVIEW.includes(a.status) && <InterviewResult applicationId={a.id} />}
           </article>
         ))}

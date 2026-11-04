@@ -6,6 +6,7 @@ import Spinner from '../../components/Spinner'
 import StatusBadge from '../../components/StatusBadge'
 import { api, errorMessage } from '../../services/api'
 import { formatDate } from '../../services/format'
+import McqReport from './McqReport'
 
 const DECIDABLE = ['interview_completed', 'shortlisted', 'on_hold']
 const CRITERIA = [['technical', 'Technical'], ['relevance', 'Relevance'], ['problem_solving', 'Problem solving'], ['clarity', 'Clarity']]
@@ -218,6 +219,8 @@ export default function CompanyReport() {
           </article>
         ))}
       </section>
+
+      <McqReport appId={id} />
 
       <section className="card">
         <h2>Your decision</h2>

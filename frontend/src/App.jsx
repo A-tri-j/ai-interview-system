@@ -26,6 +26,7 @@ import ForgotPassword from './pages/ForgotPassword'
 import Home from './pages/Home'
 import Interview from './pages/interview/Interview'
 import InterviewEntry from './pages/interview/InterviewEntry'
+import McqRound from './pages/interview/McqRound'
 import JobDetail from './pages/JobDetail'
 import Jobs from './pages/Jobs'
 import Login from './pages/Login'
@@ -66,6 +67,7 @@ export default function App() {
 
         <Route path="interview/start/:applicationId" element={<ProtectedRoute role="candidate"><Interview /></ProtectedRoute>} />
         <Route path="interview/:token" element={<ProtectedRoute role="candidate"><InterviewEntry /></ProtectedRoute>} />
+        <Route path="round2/:applicationId" element={<ProtectedRoute role="candidate"><McqRound /></ProtectedRoute>} />
 
         <Route path="company/register" element={<CompanyRegister />} />
         <Route path="company/verify-email" element={<CompanyVerify />} />

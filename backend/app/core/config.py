@@ -58,6 +58,11 @@ class Settings(BaseSettings):
     # Candidate nijer interview-er summary dekhte parbe kina
     CANDIDATE_SEE_REPORT: bool = True
 
+    # Round 2 (MCQ)
+    MCQ_COUNT: int = 10
+    MCQ_SECONDS: int = 180
+    MCQ_GRACE_SECONDS: int = 5    # network deri-r jonno ektu somoy
+
     # Gmail SMTP
     SMTP_HOST: str = "smtp.gmail.com"
     SMTP_PORT: int = 587
