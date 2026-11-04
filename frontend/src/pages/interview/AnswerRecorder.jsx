@@ -190,3 +190,4 @@ export default function AnswerRecorder({ applicationId, question, index, total, 
     </section>
   )
 }
+

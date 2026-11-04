@@ -24,6 +24,7 @@ export default function CompanyLayout() {
         <NavLink end to="/company" className="tab">Overview</NavLink>
         <NavLink to="/company/vacancies" className="tab">Vacancies</NavLink>
         <NavLink to="/company/applications" className="tab">Applicants</NavLink>
+        <NavLink to="/company/profile" className="tab">Profile</NavLink>
       </nav>
       <Outlet />
     </div>
