@@ -1,12 +1,19 @@
-import { useState } from 'react'
-import { Link, NavLink, Outlet, useNavigate } from 'react-router-dom'
+import { useEffect, useState } from 'react'
+import { Link, NavLink, Outlet, useLocation, useNavigate } from 'react-router-dom'
+import AuroraBackground from '../components/AuroraBackground'
 import ThemeToggle from '../components/ThemeToggle'
 import { useAuth } from '../hooks/useAuth'
+import { useTheme } from '../hooks/useTheme'
 
 export default function PublicLayout() {
   const [open, setOpen] = useState(false)
   const { users, logout } = useAuth()
+  const { theme } = useTheme()
+  const { pathname } = useLocation()
   const navigate = useNavigate()
+
+  // Notun page-e gele upor theke dekhai
+  useEffect(() => { window.scrollTo(0, 0) }, [pathname])
 
   const signOut = (role) => {
     logout(role)
@@ -15,6 +22,7 @@ export default function PublicLayout() {
 
   return (
     <>
+      {theme === 'aurora' && <AuroraBackground />}
       <a href="#main" className="skip-link">Skip to content</a>
       <header className="site-header">
         <div className="container header-inner">
@@ -44,9 +52,7 @@ export default function PublicLayout() {
 
           <ThemeToggle />
           <button
-            className="icon-btn menu-btn"
-            aria-label="Menu"
-            aria-expanded={open}
+            className="icon-btn menu-btn" aria-label="Menu" aria-expanded={open}
             onClick={() => setOpen((o) => !o)}
           >
             {open ? '✕' : '☰'}
@@ -55,7 +61,9 @@ export default function PublicLayout() {
       </header>
 
       <main id="main" className="main">
-        <Outlet />
+        <div key={pathname} className="page-enter">
+          <Outlet />
+        </div>
       </main>
 
       <footer className="site-footer">
@@ -67,4 +75,3 @@ export default function PublicLayout() {
     </>
   )
 }
-

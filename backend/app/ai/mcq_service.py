@@ -153,3 +153,4 @@ def generate_mcqs(db: Session, v: Vacancy, doc: CandidateDocument | None, count:
     final = accepted[:count]
     random.shuffle(final)          # role/cv question mixed thake
     return [_shuffle(q) for q in final]
+

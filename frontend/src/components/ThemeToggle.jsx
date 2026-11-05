@@ -1,18 +1,19 @@
 import { useTheme } from '../hooks/useTheme'
 
-export default function ThemeToggle() {
+const ICON = { dark: '☾', light: '☀', aurora: '✦' }
+const NAME = { dark: 'Dark', light: 'Light', aurora: 'Aurora' }
+
+// simple = true hole shudhu dark/light (admin ar company area-r jonno)
+export default function ThemeToggle({ simple = false }) {
   const { theme, toggle } = useTheme()
-  const next = theme === 'dark' ? 'light' : 'dark'
+  const list = simple ? ['dark', 'light'] : ['dark', 'light', 'aurora']
+  const next = list[(list.indexOf(theme) + 1) % list.length]
   return (
     <button
-      type="button"
-      className="icon-btn"
-      onClick={toggle}
-      aria-label={`Switch to ${next} theme`}
-      title={`Switch to ${next} theme`}
+      type="button" className="icon-btn" onClick={() => toggle(list)}
+      aria-label={`Switch to ${NAME[next]} theme`} title={`Switch to ${NAME[next]} theme`}
     >
-      {theme === 'dark' ? '☀' : '☾'}
+      {ICON[theme]}
     </button>
   )
 }
-

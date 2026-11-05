@@ -38,7 +38,7 @@ export default function AdminLogin() {
 
   return (
     <div className="container admin-login">
-      <div className="admin-login-top"><ThemeToggle /></div>
+      <div className="admin-login-top"><ThemeToggle simple /></div>
       <form className="card form-card" onSubmit={submit} noValidate>
         <h1>Admin sign in</h1>
         <Alert>{error}</Alert>

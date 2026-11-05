@@ -1,5 +1,5 @@
 import { useEffect } from 'react'
-import { NavLink, Outlet } from 'react-router-dom'
+import { NavLink, Outlet, useLocation } from 'react-router-dom'
 import Alert from '../components/Alert'
 import { useAuth } from '../hooks/useAuth'
 
@@ -11,6 +11,7 @@ const NOTICE = {
 export default function CompanyLayout() {
   const { users, reload } = useAuth()
   const company = users.company
+  const { pathname } = useLocation()
 
   // Admin approve korle jate notun status dekhay
   useEffect(() => { reload('company') }, [reload])
@@ -26,7 +27,7 @@ export default function CompanyLayout() {
         <NavLink to="/company/applications" className="tab">Applicants</NavLink>
         <NavLink to="/company/profile" className="tab">Profile</NavLink>
       </nav>
-      <Outlet />
+      <div key={pathname} className="page-enter"><Outlet /></div>
     </div>
   )
 }

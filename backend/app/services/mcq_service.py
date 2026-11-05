@@ -119,3 +119,4 @@ def expire_if_needed(db: Session, test: McqTest) -> None:
     if test.status == McqStatus.IN_PROGRESS and test.deadline_at:
         if _now() > test.deadline_at + timedelta(seconds=settings.MCQ_GRACE_SECONDS):
             finalize(db, test, auto=True)
+

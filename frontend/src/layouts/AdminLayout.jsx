@@ -29,7 +29,7 @@ export default function AdminLayout() {
           <span className="brand">AI<span>Interview</span> <span className="muted admin-tag">Admin</span></span>
           <div className="spacer" />
           <span className="muted admin-email">{users.admin?.email}</span>
-          <ThemeToggle />
+          <ThemeToggle simple />
           <button className="btn btn-ghost btn-sm" onClick={signOut}>Log out</button>
         </div>
         <div className="container">

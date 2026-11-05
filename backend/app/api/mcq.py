@@ -167,3 +167,4 @@ def company_mcq(app_id: int, company: Company = Depends(get_current_company),
             for q in test.questions
         ],
     }
+

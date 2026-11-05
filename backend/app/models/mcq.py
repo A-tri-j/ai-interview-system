@@ -70,3 +70,4 @@ class McqQuestion(Base, TimestampMixin):
             "selected_index IS NULL OR selected_index BETWEEN 0 AND 3", name="ck_mcq_selected_range"
         ),
     )
+
