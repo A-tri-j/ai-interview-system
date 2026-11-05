@@ -17,23 +17,23 @@
   --success-bg: #1d2619;
   --shadow: 0 6px 24px rgba(0, 0, 0, 0.45);
 }
-/* Light: white + warm neutral */
+/* Light: warm cream / soft parchment (no harsh pure white) */
 :root[data-theme='light'] {
   color-scheme: light;
-  --bg: #faf8f5;
-  --surface: #ffffff;
-  --surface-2: #f3efe9;
-  --border: #e4ddd2;
-  --text: #241f1a;
-  --muted: #6f675c;
-  --accent: #b5601a;
-  --accent-hover: #9a5014;
+  --bg: #ece6dc;
+  --surface: #f6f2e9;
+  --surface-2: #e8e1d3;
+  --border: #dcd3c3;
+  --text: #241e18;
+  --muted: #6d6254;
+  --accent: #a45617;
+  --accent-hover: #8c460f;
   --accent-text: #ffffff;
   --danger: #b3382b;
-  --danger-bg: #fbeceb;
+  --danger-bg: #f5e4e2;
   --success: #3f7a2c;
-  --success-bg: #eef6e9;
-  --shadow: 0 6px 20px rgba(60, 40, 20, 0.08);
+  --success-bg: #e6efe1;
+  --shadow: 0 6px 20px rgba(50, 38, 22, 0.08);
 }
 
 :root { --radius: 12px; --maxw: 1120px; }

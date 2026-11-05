@@ -27,22 +27,22 @@
 
 :root[data-theme='light'] {
   color-scheme: light;
-  --bg: #f7f5f1; --bg-2: #f1eee8;
-  --surface: #ffffff; --surface-2: #f4f1eb; --surface-3: #ebe7df;
-  --input-bg: #ffffff; --solid-input: #ffffff;
-  --border: rgba(40, 28, 10, 0.1); --border-strong: rgba(40, 28, 10, 0.18);
-  --text: #1a1612; --muted: #6b6459;
-  --accent: #a05f18; --accent-hover: #864d10; --accent-text: #ffffff;
+  --bg: #ece6dc; --bg-2: #e2dbce;
+  --surface: #f6f2e9; --surface-2: #e8e1d3; --surface-3: #ddd5c5;
+  --input-bg: #f9f6ef; --solid-input: #f9f6ef;
+  --border: rgba(55, 42, 26, 0.12); --border-strong: rgba(55, 42, 26, 0.22);
+  --text: #241e18; --muted: #6d6254;
+  --accent: #a45617; --accent-hover: #8c460f; --accent-text: #ffffff;
   --danger: #b53a2c; --danger-bg: rgba(181, 58, 44, 0.08);
   --success: #3d7a2a; --success-bg: rgba(61, 122, 42, 0.09);
-  --glow: rgba(160, 95, 24, 0.16);
-  --glass: rgba(247, 245, 241, 0.78);
-  --shadow: 0 1px 2px rgba(40, 28, 10, 0.05), 0 10px 26px -14px rgba(40, 28, 10, 0.16);
-  --shadow-lg: 0 24px 50px -24px rgba(40, 28, 10, 0.3);
+  --glow: rgba(164, 86, 23, 0.16);
+  --glass: rgba(236, 230, 220, 0.82);
+  --shadow: 0 1px 2px rgba(50, 38, 22, 0.06), 0 10px 26px -14px rgba(50, 38, 22, 0.15);
+  --shadow-lg: 0 24px 50px -24px rgba(50, 38, 22, 0.25);
   --btn-bg: linear-gradient(135deg, #2b251e, #14110d);
   --btn-bg-hover: linear-gradient(135deg, #3a322a, #1d1914);
   --btn-text: #ffffff; --btn-shadow: 0 8px 20px -10px rgba(20, 17, 13, 0.55);
-  --hero-grad: radial-gradient(60% 70% at 50% -10%, rgba(160, 95, 24, 0.12), transparent 70%);
+  --hero-grad: radial-gradient(60% 70% at 50% -10%, rgba(164, 86, 23, 0.12), transparent 70%);
 }
 
 /* Aurora: black + animated warm glow. Card gulo glass. */
@@ -249,3 +249,4 @@ tbody tr:hover { background: var(--surface-2); }
   .btn, .card, .icon-btn { transition: none; }
   html { scroll-behavior: auto; }
 }
+
