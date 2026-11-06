@@ -17,6 +17,7 @@ from app.api import (
     interviews,
     mcq,
     password_reset,
+    recommend,
     recordings,
     reports,
     session,
@@ -56,6 +57,7 @@ app.include_router(company_profile.router)
 app.include_router(admin_extra.router)
 app.include_router(mcq.candidate_router)
 app.include_router(mcq.company_router)
+app.include_router(recommend.router)
 
 
 @app.get("/")

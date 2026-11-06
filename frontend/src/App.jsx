@@ -31,6 +31,7 @@ import JobDetail from './pages/JobDetail'
 import Jobs from './pages/Jobs'
 import Login from './pages/Login'
 import NotFound from './pages/NotFound'
+import Recommend from './pages/recommend/Recommend'
 import Register from './pages/Register'
 import ResetPassword from './pages/ResetPassword'
 import VerifyEmail from './pages/VerifyEmail'
@@ -64,6 +65,7 @@ export default function App() {
         <Route path="forgot-password" element={<ForgotPassword />} />
         <Route path="reset-password" element={<ResetPassword />} />
         <Route path="dashboard" element={<ProtectedRoute role="candidate"><CandidateDashboard /></ProtectedRoute>} />
+        <Route path="recommend" element={<ProtectedRoute role="candidate"><Recommend /></ProtectedRoute>} />
 
         <Route path="interview/start/:applicationId" element={<ProtectedRoute role="candidate"><Interview /></ProtectedRoute>} />
         <Route path="interview/:token" element={<ProtectedRoute role="candidate"><InterviewEntry /></ProtectedRoute>} />

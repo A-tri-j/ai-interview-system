@@ -33,6 +33,7 @@ export default function PublicLayout() {
             <NavLink to="/jobs">Jobs</NavLink>
             {users.candidate ? (
               <>
+                <NavLink to="/recommend">Job finder</NavLink>
                 <NavLink to="/dashboard">My dashboard</NavLink>
                 <button className="btn btn-ghost btn-sm" onClick={() => signOut('candidate')}>Log out</button>
               </>

@@ -36,3 +36,7 @@ otp_limiter = RateLimiter(max_attempts=3, window_seconds=900)
 # 15 minute-e maximum 10 bar reset submit
 reset_limiter = RateLimiter(max_attempts=10, window_seconds=900)
 
+# Job finder: AI call-er upor limit (Groq quota bachate)
+ai_limiter = RateLimiter(max_attempts=30, window_seconds=900)      # chat message
+topics_limiter = RateLimiter(max_attempts=8, window_seconds=900)   # CV topics
+
