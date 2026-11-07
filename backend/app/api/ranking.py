@@ -108,3 +108,4 @@ def vacancy_ranking(
                   "is an automatic MCQ score whose answer key was AI-generated and can contain "
                   "mistakes. People make the hiring decision.",
     }
+
