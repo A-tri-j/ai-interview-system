@@ -23,3 +23,4 @@ def run_reminders_endpoint(request: Request, x_cron_secret: str | None = Header(
         login_limiter.record(key)
         raise HTTPException(401, "Unauthorized")
     return reminders.run_all()
+
