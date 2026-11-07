@@ -67,6 +67,13 @@ class Settings(BaseSettings):
     COMBINED_W_R1: float = 0.6
     COMBINED_W_R2: float = 0.4
 
+    # Email notification (Round 2 open + reminder)
+    NOTIFY_ROUND2_OPEN: bool = True
+    NOTIFY_REMINDERS: bool = True
+    REMINDER_AFTER_DAYS: int = 3            # interview invite-er koyda din por
+    REMINDER_ROUND2_AFTER_DAYS: int = 2     # Round 2 khola-r koyda din por
+    CRON_SECRET: str = ""                   # faka thakle cron endpoint bondho
+
     # Gmail SMTP
     SMTP_HOST: str = "smtp.gmail.com"
     SMTP_PORT: int = 587

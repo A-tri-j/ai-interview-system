@@ -1,0 +1,18 @@
+name: Send reminders
+on:
+  schedule:
+    - cron: "30 4 * * *"      # roj 04:30 UTC
+  workflow_dispatch:           # GitHub-e "Run workflow" diye hat-e-o chalano jay
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Call reminder endpoint
+        env:
+          API_URL: ${{ secrets.API_URL }}
+          CRON_SECRET: ${{ secrets.CRON_SECRET }}
+        run: |
+          curl --fail-with-body --silent --show-error --max-time 180 \
+            --retry 3 --retry-delay 20 --retry-all-errors \
+            -X POST "$API_URL/api/internal/run-reminders" \
+            -H "X-Cron-Secret: $CRON_SECRET"

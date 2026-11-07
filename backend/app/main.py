@@ -13,6 +13,7 @@ from app.api import (
     company_auth,
     company_profile,
     decisions,
+    internal,
     interview_flow,
     interviews,
     mcq,
@@ -60,6 +61,7 @@ app.include_router(mcq.candidate_router)
 app.include_router(mcq.company_router)
 app.include_router(recommend.router)
 app.include_router(ranking.router)
+app.include_router(internal.router)
 
 
 @app.get("/")

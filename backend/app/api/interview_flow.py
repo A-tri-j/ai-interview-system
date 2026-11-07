@@ -434,6 +434,20 @@ def submit_interview(
                 f"<p>We received your interview for <b>{html.escape(app.vacancy.title)}</b>. "
                 f"The company will review it and contact you.</p>",
             )
+    if settings.NOTIFY_ROUND2_OPEN:
+        subject2 = f"Next step: Round 2 MCQ test for {app.vacancy.title}"
+        if _notify_once(db, app, "round2_open", subject2):
+            link2 = f"{settings.PUBLIC_APP_URL}/round2/{app.id}"
+            background.add_task(
+                send_email, candidate.email, subject2,
+                f"<p>Hello {html.escape(candidate.full_name)},</p>"
+                f"<p>Thank you for completing the video interview for "
+                f"<b>{html.escape(app.vacancy.title)}</b>. Round 2 is now open.</p>"
+                f"<p>It is a short MCQ test: {settings.MCQ_COUNT} questions in "
+                f"{settings.MCQ_SECONDS // 60} minutes. The timer starts only when you press "
+                f"Start, and your answers are submitted automatically when time runs out.</p>"
+                f'<p><a href="{link2}">Open Round 2</a></p>',
+            )
     session_id = session.id
     db.commit()
     # Response-er por background-e evaluation chole. Fail hole company retry korte pare.
