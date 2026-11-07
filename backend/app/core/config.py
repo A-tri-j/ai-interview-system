@@ -63,6 +63,10 @@ class Settings(BaseSettings):
     MCQ_SECONDS: int = 180
     MCQ_GRACE_SECONDS: int = 5    # network deri-r jonno ektu somoy
 
+    # Combined score weight (Round 1 AI + Round 2 MCQ). Jog korle 1 hote hobe na, nijei normalize hoy.
+    COMBINED_W_R1: float = 0.6
+    COMBINED_W_R2: float = 0.4
+
     # Gmail SMTP
     SMTP_HOST: str = "smtp.gmail.com"
     SMTP_PORT: int = 587

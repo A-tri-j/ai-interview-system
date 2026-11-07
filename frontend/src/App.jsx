@@ -17,6 +17,7 @@ import CompanyApplications from './pages/company/CompanyApplications'
 import CompanyLogin from './pages/company/CompanyLogin'
 import CompanyOverview from './pages/company/CompanyOverview'
 import CompanyProfile from './pages/company/CompanyProfile'
+import CompanyRanking from './pages/company/CompanyRanking'
 import CompanyRegister from './pages/company/CompanyRegister'
 import CompanyReport from './pages/company/CompanyReport'
 import CompanyVacancies from './pages/company/CompanyVacancies'
@@ -79,6 +80,7 @@ export default function App() {
           <Route path="vacancies" element={<CompanyVacancies />} />
           <Route path="vacancies/new" element={<VacancyForm />} />
           <Route path="vacancies/:id/edit" element={<VacancyForm />} />
+          <Route path="vacancies/:id/ranking" element={<CompanyRanking />} />
           <Route path="applications" element={<CompanyApplications />} />
           <Route path="applications/:id" element={<CompanyApplicationDetail />} />
           <Route path="applications/:id/report" element={<CompanyReport />} />

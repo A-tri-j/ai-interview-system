@@ -195,3 +195,4 @@ def cv_topics(
         "note": "These are likely topics based on your CV. Real interviews vary and these "
                 "do not come from any company's interview.",
     }
+

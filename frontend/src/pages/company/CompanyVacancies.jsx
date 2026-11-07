@@ -101,6 +101,7 @@ export default function CompanyVacancies() {
                           <button className="btn btn-danger btn-sm" disabled={busyId === v.id} onClick={() => act(v, 'close')}>Close</button>
                         )}
                         <Link className="btn btn-ghost btn-sm" to={`/company/applications?vacancy_id=${v.id}`}>Applicants</Link>
+                        <Link className="btn btn-ghost btn-sm" to={`/company/vacancies/${v.id}/ranking`}>Ranking</Link>
                       </div>
                     </td>
                   </tr>

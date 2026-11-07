@@ -414,3 +414,4 @@ def cv_topics(text: str, vacancy: Vacancy | None, missing: list[str]) -> tuple[l
     if not topics:
         raise ValueError("No topics could be grounded in the CV")
     return topics[:8], gaps[:6]
+
