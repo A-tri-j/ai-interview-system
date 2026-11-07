@@ -284,3 +284,13 @@ tbody tr:hover { background: var(--surface-2); }
 .topics { border-color: var(--accent); }
 .topic { padding: 12px 0; border-top: 1px solid var(--border); }
 .topic:first-of-type { border-top: 0; }
+
+/* ---------- Bulk actions ---------- */
+.bulk-bar {
+  display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap;
+  position: sticky; top: 70px; z-index: 6; padding: 10px 14px; border-radius: 14px;
+  background: var(--surface); border: 1px solid var(--accent); box-shadow: 0 10px 30px -14px var(--glow), var(--shadow);
+  animation: rise 0.25s backwards;
+}
+th.chk, td.chk { width: 44px; padding-right: 0; }
+td.chk input, th.chk input { width: 18px; height: 18px; padding: 0; }

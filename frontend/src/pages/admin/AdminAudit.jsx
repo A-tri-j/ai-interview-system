@@ -44,6 +44,7 @@ export default function AdminAudit() {
           <option value="account_deleted">Account deleted</option>
           <option value="round1_reset">Round 1 reset</option>
           <option value="round2_reset">Round 2 reset</option>
+          <option value="applications_exported">Applicants exported</option>
           <option value="mcq_submitted">MCQ submitted</option>
         </select>
       </div>

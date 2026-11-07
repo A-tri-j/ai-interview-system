@@ -8,6 +8,7 @@ from app.api import (
     admin_extra,
     applications,
     auth,
+    bulk,
     candidate_privacy,
     candidates,
     company_auth,
@@ -64,6 +65,7 @@ app.include_router(recommend.router)
 app.include_router(ranking.router)
 app.include_router(internal.router)
 app.include_router(retakes.router)
+app.include_router(bulk.router)
 
 
 @app.get("/")

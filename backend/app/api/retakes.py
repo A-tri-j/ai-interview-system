@@ -181,3 +181,4 @@ def reset_round2(
             f'<p><a href="{link}">Open Round 2</a></p>', background)
     db.commit()
     return {"status": a.status, "remaining": settings.RETAKE_LIMIT - used - 1}
+
