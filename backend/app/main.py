@@ -22,6 +22,7 @@ from app.api import (
     recommend,
     recordings,
     reports,
+    retakes,
     session,
     vacancies,
 )
@@ -62,6 +63,7 @@ app.include_router(mcq.company_router)
 app.include_router(recommend.router)
 app.include_router(ranking.router)
 app.include_router(internal.router)
+app.include_router(retakes.router)
 
 
 @app.get("/")

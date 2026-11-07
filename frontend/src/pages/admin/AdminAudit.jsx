@@ -42,6 +42,9 @@ export default function AdminAudit() {
           <option value="recording_viewed">Recording viewed</option>
           <option value="recordings_deleted_by_user">Recordings deleted</option>
           <option value="account_deleted">Account deleted</option>
+          <option value="round1_reset">Round 1 reset</option>
+          <option value="round2_reset">Round 2 reset</option>
+          <option value="mcq_submitted">MCQ submitted</option>
         </select>
       </div>
       <Alert>{error}</Alert>

@@ -73,6 +73,7 @@ class Settings(BaseSettings):
     REMINDER_AFTER_DAYS: int = 3            # interview invite-er koyda din por
     REMINDER_ROUND2_AFTER_DAYS: int = 2     # Round 2 khola-r koyda din por
     CRON_SECRET: str = ""                   # faka thakle cron endpoint bondho
+    RETAKE_LIMIT: int = 2    # ek application-e protita round maximum koybar reset kora jay
 
     # Gmail SMTP
     SMTP_HOST: str = "smtp.gmail.com"

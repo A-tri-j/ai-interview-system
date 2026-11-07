@@ -4,6 +4,7 @@ import Alert from '../../components/Alert'
 import Field from '../../components/Field'
 import Spinner from '../../components/Spinner'
 import StatusBadge from '../../components/StatusBadge'
+import RetakePanel from './RetakePanel'
 import { api, errorMessage } from '../../services/api'
 import { formatDate } from '../../services/format'
 
@@ -160,6 +161,10 @@ export default function CompanyApplicationDetail() {
           <h2>Interview</h2>
           <Link className="btn btn-primary" to={`/company/applications/${a.id}/report`}>View interview report</Link>
         </section>
+      )}
+
+      {['approved_for_interview', 'interview_completed', 'shortlisted', 'on_hold'].includes(a.status) && (
+        <RetakePanel appId={a.id} onChanged={load} />
       )}
 
       <section className="card">
