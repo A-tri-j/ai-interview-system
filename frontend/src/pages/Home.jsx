@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import Alert from '../components/Alert'
 import EmptyState from '../components/EmptyState'
+import HomeAssistant from '../components/HomeAssistant'
 import Spinner from '../components/Spinner'
 import VacancyCard from '../components/VacancyCard'
 import { api, errorMessage } from '../services/api'
@@ -54,6 +55,8 @@ export default function Home() {
           </form>
         </div>
       </section>
+
+      <HomeAssistant />
 
       <section className="container section">
         <div className="section-head">

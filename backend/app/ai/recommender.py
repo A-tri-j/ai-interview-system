@@ -214,6 +214,57 @@ def _vacancy_vectors(vacancies: list[Vacancy]) -> dict[int, list[float]]:
     return out
 
 
+# ---------------- CV readiness (structure-based, code diye hishab) ----------------
+
+_EMAIL = re.compile(r"[\w.+-]+@[\w-]+\.[\w.-]+")
+_PHONE = re.compile(r"\+?\d[\d\s\-()]{8,}\d")
+_LINK = re.compile(r"github\.com|linkedin\.com|gitlab\.com|behance\.net|https?://", re.I)
+_METRIC = re.compile(r"\d+\s*%|[$₹৳]\s*\d|\b\d+\s*(?:users|clients|customers|projects|ms|requests|downloads)\b", re.I)
+_SECTIONS = {
+    "education": r"\b(education|university|college|bachelor|bsc|b\.sc|btech|b\.tech|master|msc|diploma|degree|hsc|ssc)\b",
+    "experience": r"\b(experience|employment|work history|internship|intern|worked)\b",
+    "projects": r"\b(projects?|portfolio)\b",
+    "skills": r"\b(skills?|technologies|tech stack|tools)\b",
+}
+
+
+def cv_quality(text: str, skills_found: list[str]) -> dict:
+    """CV-r gothon koto bhalo (0-100). Hiring prediction na, shudhu CV improve-er guide."""
+    lower = text.lower()
+    words = len(text.split())
+    n = len(skills_found)
+    has = {k: bool(re.search(p, lower)) for k, p in _SECTIONS.items()}
+    if 250 <= words <= 1500:
+        length_pts = 10
+    elif 100 <= words < 250 or 1500 < words <= 2500:
+        length_pts = 5
+    else:
+        length_pts = 0
+
+    # (label, points possible, points earned, tip jodi kom pay)
+    rows = [
+        ("Email address", 10, 10 if _EMAIL.search(text) else 0, "Add a professional email address."),
+        ("Phone number", 5, 5 if _PHONE.search(text) else 0, "Add a phone number."),
+        ("Education section", 15, 15 if has["education"] else 0, "Add your education: degree, institute, year."),
+        ("Experience or internship", 15, 15 if has["experience"] else 0, "Add work or internship experience, even small ones."),
+        ("Projects", 15, 15 if has["projects"] else 0, "Add 2 to 3 projects with what you built and which technologies you used."),
+        ("Skills section", 5, 5 if has["skills"] else 0, "Add a clear Skills section."),
+        ("Relevant skills found", 15, round(min(n, 10) / 10 * 15), "List more specific tools and technologies you know."),
+        ("Links (GitHub, LinkedIn, portfolio)", 5, 5 if _LINK.search(text) else 0, "Add your GitHub, LinkedIn or portfolio link."),
+        ("Good length", 10, length_pts, "Aim for about 1 to 2 pages (roughly 250 to 1000 words)."),
+        ("Results with numbers", 5, 5 if _METRIC.search(text) else 0, "Add numbers to show results, for example “reduced load time by 30%”."),
+    ]
+    percent = sum(r[2] for r in rows)
+    label = "Strong" if percent >= 80 else "Good" if percent >= 60 else "Needs work" if percent >= 40 else "Weak"
+    return {
+        "percent": percent, "label": label,
+        "checks": [{"label": l, "points": p, "earned": e, "ok": e == p, "tip": None if e == p else t}
+                   for l, p, e, t in rows],
+        "note": "This score looks at how complete and well-structured your CV is. It is not a "
+                "prediction of hiring results.",
+    }
+
+
 def label_for(percent: int) -> str:
     if percent >= 75:
         return "Strong match"

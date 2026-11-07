@@ -120,12 +120,25 @@ def search(
         f = rec.merge_filters(f, parsed)
 
     rows, relaxed = _find(db, f)
+    alternatives, alt_scores = [], {}
+    if not rows:
+        relaxed = []        # kichu-i na pele "filter dhile korechi" bola bhul hobe
+        # Site-e oi job nei: CV thakle CV-r shathe sobcheye mile emon job, na thakle latest job
+        pool = _public_query(db).order_by(Vacancy.created_at.desc()).limit(60).all()
+        alt_scores = _scores(db, c, pool)
+        if alt_scores:
+            pool.sort(key=lambda v: -alt_scores[v.id]["percent"])
+        alternatives = pool[:4]
+
     scores = _scores(db, c, rows)
+    ids = [v.id for v in rows + alternatives]
     applied = {r[0] for r in db.query(Application.vacancy_id).filter(
-        Application.candidate_id == c.id, Application.vacancy_id.in_([v.id for v in rows]))}
+        Application.candidate_id == c.id, Application.vacancy_id.in_(ids))} if ids else set()
     return {
         "understood": f, "relaxed": relaxed, "used_ai": used_ai, "personalized": bool(scores),
         "total": len(rows), "items": [_item(v, scores.get(v.id), v.id in applied) for v in rows],
+        "alternatives": [_item(v, alt_scores.get(v.id), v.id in applied) for v in alternatives],
+        "alternatives_personalized": bool(alt_scores),
     }
 
 
@@ -158,6 +171,7 @@ def matches(c: Candidate = Depends(get_current_candidate), db: Session = Depends
         **base, "readable": True, "skills_found": skills_found,
         "skill_gaps": [{"skill": s, "jobs": n} for s, n in gaps.most_common(8)],
         "items": [_item(v, scores[v.id], v.id in applied) for v in ranked],
+        "cv_quality": rec.cv_quality(ctx["text"], skills_found),
         "note": "Match % compares your CV text with each vacancy's requirements. It is an "
                 "estimate to help you choose where to apply, not a hiring prediction.",
     }
