@@ -65,14 +65,47 @@ export default function PublicLayout() {
       </main>
 
       <footer className="site-footer">
-        <div className="container footer-inner">
-          <div>
-            <span>© {new Date().getFullYear()} AI Interview Platform</span>
-            <span className="muted"> · Built by </span>
-            <strong>Atrij Ghosh</strong>
-            <span className="muted"> (<a href="mailto:atrijghosh07@gmail.com">atrijghosh07@gmail.com</a>)</span>
+        <div className="container footer-content">
+          <div className="footer-top">
+            <div className="footer-brand-col">
+              <Link to="/" className="brand">AI<span>Interview</span></Link>
+              <p className="footer-tagline">
+                AI-driven smart interview platform. AI scores are advisory — people make hiring decisions.
+              </p>
+            </div>
+
+            <div className="footer-links-col">
+              <span className="footer-heading">Platform</span>
+              <div className="footer-links">
+                <Link to="/jobs">Browse Jobs</Link>
+                <Link to="/recommend">AI Job Finder</Link>
+                <Link to="/company/login">Company Portal</Link>
+              </div>
+            </div>
+
+            <div className="footer-creator-col">
+              <span className="footer-heading">Creator & Developer</span>
+              <div className="footer-creator-card">
+                <div className="creator-avatar" aria-hidden="true">AG</div>
+                <div className="creator-info">
+                  <div className="creator-role">Built by</div>
+                  <div className="creator-name">Atrij Ghosh</div>
+                  <a href="mailto:atrijghosh07@gmail.com" className="creator-email" title="Send email to Atrij Ghosh">
+                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                      <rect width="20" height="16" x="2" y="4" rx="2"/>
+                      <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/>
+                    </svg>
+                    atrijghosh07@gmail.com
+                  </a>
+                </div>
+              </div>
+            </div>
           </div>
-          <span className="muted">AI scores are advisory. People make hiring decisions.</span>
+
+          <div className="footer-bottom">
+            <span>© {new Date().getFullYear()} AI Interview Platform. All rights reserved.</span>
+            <span className="footer-pill">Fair & Transparent by Design</span>
+          </div>
         </div>
       </footer>
     </>
