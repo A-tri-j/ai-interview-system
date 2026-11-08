@@ -91,3 +91,4 @@ def set_prefs(
     c.reminder_emails = data.reminder_emails
     db.commit()
     return {"reminder_emails": c.reminder_emails}
+

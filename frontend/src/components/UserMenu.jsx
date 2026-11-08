@@ -35,3 +35,4 @@ export default function UserMenu({ user, onLogout }) {
     </div>
   )
 }
+

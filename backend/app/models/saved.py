@@ -18,3 +18,4 @@ class SavedJob(Base, TimestampMixin):
     )
 
     __table_args__ = (UniqueConstraint("candidate_id", "vacancy_id", name="uq_saved_once"),)
+

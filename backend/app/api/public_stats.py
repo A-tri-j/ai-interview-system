@@ -49,3 +49,4 @@ def stats(db: Session = Depends(get_db)):
     }
     _cache.update(at=time.time(), data=data)
     return data
+

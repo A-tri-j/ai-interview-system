@@ -80,3 +80,4 @@ def unsave_job(
     ).delete(synchronize_session=False)
     db.commit()
     return {"saved": False}
+
