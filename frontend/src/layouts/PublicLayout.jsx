@@ -66,7 +66,12 @@ export default function PublicLayout() {
 
       <footer className="site-footer">
         <div className="container footer-inner">
-          <span>© {new Date().getFullYear()} AI Interview Platform</span>
+          <div>
+            <span>© {new Date().getFullYear()} AI Interview Platform</span>
+            <span className="muted"> · Built by </span>
+            <strong>Atrij Ghosh</strong>
+            <span className="muted"> (<a href="mailto:atrijghosh07@gmail.com">atrijghosh07@gmail.com</a>)</span>
+          </div>
           <span className="muted">AI scores are advisory. People make hiring decisions.</span>
         </div>
       </footer>
