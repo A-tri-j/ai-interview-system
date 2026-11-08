@@ -1,6 +1,6 @@
 from datetime import datetime
 
-from sqlalchemy import Boolean, DateTime, ForeignKey, String, Text
+from sqlalchemy import Boolean, DateTime, ForeignKey, String, Text, text
 from sqlalchemy.dialects.postgresql import JSONB
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
@@ -20,6 +20,10 @@ class Candidate(Base, TimestampMixin):
     is_active: Mapped[bool] = mapped_column(Boolean, default=True)
     last_login_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
     password_changed_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
+    # Reminder email chai kina (candidate nije bodlate pare)
+    reminder_emails: Mapped[bool] = mapped_column(
+        Boolean, default=True, server_default=text("true")
+    )
 
     profile: Mapped["CandidateProfile"] = relationship(
         back_populates="candidate", uselist=False, cascade="all, delete-orphan"

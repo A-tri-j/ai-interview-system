@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import { Link, NavLink, Outlet, useLocation, useNavigate } from 'react-router-dom'
 import AuroraBackground from '../components/AuroraBackground'
 import ThemeToggle from '../components/ThemeToggle'
+import UserMenu from '../components/UserMenu'
 import { useAuth } from '../hooks/useAuth'
 import { useTheme } from '../hooks/useTheme'
 
@@ -12,7 +13,6 @@ export default function PublicLayout() {
   const { pathname } = useLocation()
   const navigate = useNavigate()
 
-  // Notun page-e gele upor theke dekhai
   useEffect(() => { window.scrollTo(0, 0) }, [pathname])
 
   const signOut = (role) => {
@@ -34,8 +34,7 @@ export default function PublicLayout() {
             {users.candidate ? (
               <>
                 <NavLink to="/recommend">Job finder</NavLink>
-                <NavLink to="/dashboard">My dashboard</NavLink>
-                <button className="btn btn-ghost btn-sm" onClick={() => signOut('candidate')}>Log out</button>
+                <NavLink to="/dashboard">Dashboard</NavLink>
               </>
             ) : users.company ? (
               <>
@@ -52,10 +51,8 @@ export default function PublicLayout() {
           </nav>
 
           <ThemeToggle />
-          <button
-            className="icon-btn menu-btn" aria-label="Menu" aria-expanded={open}
-            onClick={() => setOpen((o) => !o)}
-          >
+          {users.candidate && <UserMenu user={users.candidate} onLogout={() => signOut('candidate')} />}
+          <button className="icon-btn menu-btn" aria-label="Menu" aria-expanded={open} onClick={() => setOpen((o) => !o)}>
             {open ? '✕' : '☰'}
           </button>
         </div>

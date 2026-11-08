@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom'
+import SaveButton from '../../components/SaveButton'
 import { formatDate, pretty } from '../../services/format'
 
 const tone = (p) => (p >= 75 ? 'high' : p >= 55 ? 'mid' : 'low')
@@ -50,6 +51,7 @@ export default function MatchCard({ v, onPrep }) {
         {v.applied ? <span className="badge badge-ok">Applied</span> : (
           <Link to={`/jobs/${v.id}/apply`} className="btn btn-primary btn-sm">Apply</Link>
         )}
+        <SaveButton vacancyId={v.id} variant="text" />
         {onPrep && m && (
           <button type="button" className="btn btn-ghost btn-sm" onClick={() => onPrep(v)}>
             Interview prep

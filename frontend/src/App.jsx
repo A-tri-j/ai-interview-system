@@ -35,6 +35,7 @@ import NotFound from './pages/NotFound'
 import Recommend from './pages/recommend/Recommend'
 import Register from './pages/Register'
 import ResetPassword from './pages/ResetPassword'
+import Settings from './pages/Settings'
 import VerifyEmail from './pages/VerifyEmail'
 
 // Admin route Part 6
@@ -66,6 +67,7 @@ export default function App() {
         <Route path="forgot-password" element={<ForgotPassword />} />
         <Route path="reset-password" element={<ResetPassword />} />
         <Route path="dashboard" element={<ProtectedRoute role="candidate"><CandidateDashboard /></ProtectedRoute>} />
+        <Route path="settings" element={<ProtectedRoute role="candidate"><Settings /></ProtectedRoute>} />
         <Route path="recommend" element={<ProtectedRoute role="candidate"><Recommend /></ProtectedRoute>} />
 
         <Route path="interview/start/:applicationId" element={<ProtectedRoute role="candidate"><Interview /></ProtectedRoute>} />

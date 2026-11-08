@@ -9,6 +9,7 @@ from app.api import (
     applications,
     auth,
     bulk,
+    candidate_extras,
     candidate_privacy,
     candidates,
     company_auth,
@@ -19,18 +20,26 @@ from app.api import (
     interviews,
     mcq,
     password_reset,
+    public_stats,
     ranking,
     recommend,
     recordings,
     reports,
     retakes,
+    saved,
     session,
     vacancies,
 )
 from app.core.config import settings
 from app.database.session import get_db
 
-app = FastAPI(title=settings.APP_NAME)
+_prod = settings.ENVIRONMENT == "production"
+app = FastAPI(
+    title=settings.APP_NAME,
+    docs_url=None if _prod else "/docs",
+    redoc_url=None,
+    openapi_url=None if _prod else "/openapi.json",
+)
 
 app.add_middleware(
     CORSMiddleware,
@@ -66,6 +75,9 @@ app.include_router(ranking.router)
 app.include_router(internal.router)
 app.include_router(retakes.router)
 app.include_router(bulk.router)
+app.include_router(saved.router)
+app.include_router(candidate_extras.router)
+app.include_router(public_stats.router)
 
 
 @app.get("/")

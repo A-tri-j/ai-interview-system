@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import Alert from '../components/Alert'
 import EmptyState from '../components/EmptyState'
+import SaveButton from '../components/SaveButton'
 import Spinner from '../components/Spinner'
 import { useAuth } from '../hooks/useAuth'
 import { api, errorMessage } from '../services/api'
@@ -90,6 +91,7 @@ export default function JobDetail() {
           <Link to={`/jobs/${job.id}/apply`} className="btn btn-primary" style={{ width: '100%' }}>
             {users.candidate ? 'Apply now' : 'Sign in to apply'}
           </Link>
+          <div style={{ marginTop: 10 }}><SaveButton vacancyId={job.id} variant="text" /></div>
           <hr className="rule" />
           <h3>{job.company?.company_name || job.company}</h3>
           <p className="muted">{job.company?.industry} · {job.company?.company_size} employees</p>

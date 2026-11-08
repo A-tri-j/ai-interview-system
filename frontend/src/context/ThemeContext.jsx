@@ -25,6 +25,6 @@ export function ThemeProvider({ children }) {
     setTheme((t) => list[(list.indexOf(t) + 1) % list.length])
   }, [])
 
-  const value = useMemo(() => ({ theme, toggle }), [theme, toggle])
+  const value = useMemo(() => ({ theme, toggle, setTheme }), [theme, toggle])
   return <ThemeContext.Provider value={value}>{children}</ThemeContext.Provider>
 }

@@ -1,16 +1,17 @@
 import { Link } from 'react-router-dom'
 import { formatDate, pretty } from '../services/format'
+import SaveButton from './SaveButton'
 
 export default function VacancyCard({ v }) {
   const skills = [...(v.required_skills || []), ...(v.required_technologies || [])].slice(0, 5)
   return (
     <article className="card vacancy-card">
+      <SaveButton vacancyId={v.id} />
       <div>
         <h3 className="vc-title">
-          {/* stretched-link: pura card click-joggo hoy */}
           <Link to={`/jobs/${v.id}`} className="stretched-link">{v.title}</Link>
         </h3>
-        <p className="muted vc-company">{v.company?.company_name || v.company}</p>
+        <p className="muted vc-company">{v.company.company_name}</p>
       </div>
       <div className="badges">
         <span className="badge">{pretty(v.work_mode)}</span>

@@ -140,7 +140,11 @@ def cv_text(doc: CandidateDocument) -> str:
     cached = _texts.get(doc.id)
     if cached is not None:
         return cached
-    text = extract_text(storage.full_path(doc.storage_key))   # unreadable hole ValueError
+    try:
+        with storage.local_path(doc.storage_key) as path:
+            text = extract_text(path)
+    except FileNotFoundError:
+        raise ValueError("The CV file is missing")
     _texts.set(doc.id, text)
     return text
 

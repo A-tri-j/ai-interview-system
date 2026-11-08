@@ -6,13 +6,16 @@ import './premium.css'
 import App from './App.jsx'
 import { ThemeProvider } from './context/ThemeContext.jsx'
 import { AuthProvider } from './context/AuthContext.jsx'
+import { SavedProvider } from './context/SavedContext.jsx'
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
     <BrowserRouter>
       <ThemeProvider>
         <AuthProvider>
-          <App />
+          <SavedProvider>
+            <App />
+          </SavedProvider>
         </AuthProvider>
       </ThemeProvider>
     </BrowserRouter>

@@ -49,7 +49,11 @@ def index_document(db: Session, doc: CandidateDocument) -> None:
     already = db.query(DocumentChunk.id).filter(DocumentChunk.document_id == doc.id).first()
     if already:
         return
-    text = extract_text(storage.full_path(doc.storage_key))
+    try:
+        with storage.local_path(doc.storage_key) as path:
+            text = extract_text(path)
+    except FileNotFoundError:
+        raise ValueError("The CV file is missing")
     _store(db, _split(text), document_id=doc.id)
 
 

@@ -77,6 +77,7 @@ class Settings(BaseSettings):
 
     # Gmail SMTP
     SMTP_HOST: str = "smtp.gmail.com"
+    BREVO_API_KEY: str = ""     # SMTP block hole HTTPS diye email pathay (optional)
     SMTP_PORT: int = 587
     SMTP_EMAIL: str = ""
     SMTP_APP_PASSWORD: str = ""

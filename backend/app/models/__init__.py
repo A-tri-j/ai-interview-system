@@ -9,4 +9,5 @@ from app.models.interview import (
 )
 from app.models.mcq import McqQuestion, McqStatus, McqTest
 from app.models.misc import AuditLog, EmailVerification, Notification, PasswordResetToken
+from app.models.saved import SavedJob
 from app.models.vacancy import Vacancy, VacancyStatus

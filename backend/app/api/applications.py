@@ -2,9 +2,10 @@ import html
 import re
 from datetime import datetime, timezone
 from typing import Literal
+from urllib.parse import quote
 
 from fastapi import APIRouter, BackgroundTasks, Depends, File, Form, HTTPException, Query, UploadFile
-from fastapi.responses import FileResponse
+from fastapi.responses import FileResponse, Response
 from pydantic import BaseModel, EmailStr, Field
 from sqlalchemy.exc import IntegrityError
 from sqlalchemy.orm import Session, joinedload
@@ -295,14 +296,15 @@ def download_cv(
     a = _company_application(db, company, app_id)
     if not a.cv_document:
         raise HTTPException(404, "No CV attached")
-    path = storage.full_path(a.cv_document.storage_key)
-    if not path.exists():
+    try:
+        data = storage.read_bytes(a.cv_document.storage_key)
+    except FileNotFoundError:
         raise HTTPException(404, "CV file is missing")
-    return FileResponse(
-        path,
-        media_type=a.cv_document.content_type,
-        filename=a.cv_document.original_filename,
-        headers={"X-Content-Type-Options": "nosniff"},
+    name = quote(a.cv_document.original_filename)
+    return Response(
+        content=data, media_type=a.cv_document.content_type,
+        headers={"Content-Disposition": f"attachment; filename*=UTF-8''{name}",
+                 "X-Content-Type-Options": "nosniff"},
     )
 
 

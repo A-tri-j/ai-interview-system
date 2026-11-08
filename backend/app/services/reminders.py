@@ -75,7 +75,8 @@ def _interview_reminders(db: Session, budget: list[int]) -> dict:
     for a in apps:
         if budget[0] <= 0:
             break
-        if (not a.candidate.is_active or a.vacancy.company.status != CompanyStatus.APPROVED
+        if (not a.candidate.is_active or not a.candidate.reminder_emails
+                or a.vacancy.company.status != CompanyStatus.APPROVED
                 or _done(db, a.id, "reminder_interview")):
             skipped += 1
             continue
@@ -118,7 +119,8 @@ def _round2_reminders(db: Session, budget: list[int]) -> dict:
     for a in apps:
         if budget[0] <= 0:
             break
-        if (not a.candidate.is_active or a.vacancy.company.status != CompanyStatus.APPROVED
+        if (not a.candidate.is_active or not a.candidate.reminder_emails
+                or a.vacancy.company.status != CompanyStatus.APPROVED
                 or _done(db, a.id, "reminder_round2")):
             skipped += 1
             continue

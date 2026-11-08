@@ -11,8 +11,30 @@ from app.core.config import settings
 logger = logging.getLogger("email")
 
 
+def _send_brevo(to: str, subject: str, html_body: str) -> bool:
+    """HTTPS API diye email (SMTP port block thakle). Sender email Brevo-te verify kora lagbe."""
+    import httpx
+    try:
+        r = httpx.post(
+            "https://api.brevo.com/v3/smtp/email",
+            headers={"api-key": settings.BREVO_API_KEY, "accept": "application/json"},
+            json={"sender": {"name": settings.EMAIL_FROM_NAME, "email": settings.SMTP_EMAIL},
+                  "to": [{"email": to}], "subject": subject, "htmlContent": html_body},
+            timeout=20,
+        )
+        if r.status_code >= 300:
+            logger.error("Brevo email failed: HTTP %s", r.status_code)
+            return False
+        return True
+    except Exception as exc:  # noqa: BLE001
+        logger.error("Brevo email failed: %s", exc)
+        return False
+
+
 def send_email(to: str, subject: str, html_body: str) -> bool:
     """Email pathay. Safol hole True, fail hole False (app crash korbe na)."""
+    if settings.BREVO_API_KEY:
+        return _send_brevo(to, subject, html_body)
     if not settings.smtp_configured:
         # SMTP set na thakle development-e console-e dekhai
         if settings.ENVIRONMENT == "development":
