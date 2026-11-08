@@ -84,7 +84,7 @@ export default function CompanyApplicationDetail() {
     }
   }
 
-  // CV-er jonno Authorization header lage, tai blob hishebe nei
+  // Fetch CV with Authorization header as blob
   const downloadCv = async () => {
     setError('')
     try {

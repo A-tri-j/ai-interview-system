@@ -8,7 +8,7 @@ import VacancyCard from '../components/VacancyCard'
 import { useAuth } from '../hooks/useAuth'
 import { api, errorMessage } from '../services/api'
 
-// Scroll korle dhire dhire dekha dey
+// Intersection observer reveal animations
 function Reveal({ children, className = '', delay = 0 }) {
   const ref = useRef(null)
   const [on, setOn] = useState(false)

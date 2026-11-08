@@ -1,5 +1,5 @@
-// Ke login ache (candidate / company / admin) ta ekhane thake.
-// Protita role-er token alada, tai ekshathe tin-jon login thakte pare (alada tab-e).
+// Tracks active authentication state for candidate, company, and admin roles.
+// Each role maintains an isolated token store, enabling concurrent sessions in separate tabs.
 import { createContext, useCallback, useEffect, useMemo, useState } from 'react'
 import { api, tokenStore } from '../services/api'
 
@@ -11,7 +11,7 @@ const ME = {
   admin: '/api/admin/me',
 }
 const EMPTY = { candidate: null, company: null, admin: null }
-const REFRESH_MS = 30 * 60 * 1000 // active thakle 30 minute por por token notun kori
+const REFRESH_MS = 30 * 60 * 1000 // Refresh active session token every 30 minutes
 
 export function AuthProvider({ children }) {
   const [users, setUsers] = useState(EMPTY)
@@ -25,21 +25,21 @@ export function AuthProvider({ children }) {
       setUser(role, data)
       return data
     } catch {
-      setUser(role, null) // 401 hole interceptor token age-i muche dise
+      setUser(role, null) // On 401, axios interceptor removes token
       return null
     }
   }, [setUser])
 
-  // Sliding session: backend notun token dey (candidate 30 din, company 24 ghonta)
+  // Sliding session: backend returns a refreshed access token
   const refresh = useCallback(async (role) => {
     if (!tokenStore.get(role)) return
     try {
       const { data } = await api[role].post('/api/auth/refresh')
       tokenStore.set(role, data.access_token)
-    } catch { /* fail hole purano token cholbe, expire holei logout */ }
+    } catch { /* If refresh fails, keep current token until expiration */ }
   }, [])
 
-  // Site khulle: save kora token thakle user load kori
+  // On mount: restore user profile if an existing token is stored
   useEffect(() => {
     let alive = true
     const roles = Object.keys(ME).filter((r) => tokenStore.get(r))

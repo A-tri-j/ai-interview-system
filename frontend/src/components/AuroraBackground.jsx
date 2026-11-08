@@ -1,4 +1,4 @@
-// Shudhu CSS animation. JS-e kono loop nei, tai battery/CPU beshi khay na.
+// Pure CSS animation. No JS loop, minimizing battery and CPU consumption.
 export default function AuroraBackground() {
   return (
     <div className="aurora-bg" aria-hidden="true">

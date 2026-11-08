@@ -1,4 +1,4 @@
-// Step 1: email + password. Step 2: email-e ashha 6-digit code. Tarpor-i login hoy.
+// Two-step authentication: Step 1 verifies credentials, Step 2 verifies 6-digit OTP sent via email.
 import { useEffect, useState } from 'react'
 import { Link, Navigate, useLocation } from 'react-router-dom'
 import Alert from '../../components/Alert'

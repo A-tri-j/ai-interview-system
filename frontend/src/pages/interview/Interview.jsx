@@ -6,7 +6,7 @@ import { api, errorMessage } from '../../services/api'
 import AnswerRecorder from './AnswerRecorder'
 import { LiveVideo, MicMeter, useMedia } from './media'
 
-const LONG = { timeout: 180000 } // AI/Whisper call-e somoy lage
+const LONG = { timeout: 180000 } // Extended timeout for AI evaluation and transcription
 const DONE = ['submitted', 'evaluating', 'completed', 'failed']
 const base = (id) => `/api/interviews/${id}`
 
@@ -68,7 +68,7 @@ export default function Interview() {
       await api.candidate.post(`${base(applicationId)}/prepare`, null, LONG)
     } catch (e) {
       prepErr = e
-      // 403 hole hoyto interview age-i shesh: state dekhar chesta kori
+      // If 403, interview may already be concluded: attempt fetching current state
       if (e.response?.status !== 403) {
         setFatal({ msg: errorMessage(e), retry: !e.response || [502, 503].includes(e.response.status) })
         setLoading(false)
@@ -85,7 +85,7 @@ export default function Interview() {
     }
   }, [applicationId])
 
-  // started ref: React StrictMode-e duibar AI call na hoy
+  // started ref: guard against duplicate AI prep triggers under React StrictMode
   useEffect(() => {
     if (started.current === applicationId) return
     started.current = applicationId
@@ -155,7 +155,7 @@ export default function Interview() {
     } catch (e) {
       setError(errorMessage(e))
       if (e.response?.status === 409) {
-        // Notun follow-up toiri hoye thakte pare: state abar nei
+        // Follow-up questions may have been generated: refetch current state
         try { setS((await api.candidate.get(`${base(applicationId)}/state`)).data) } catch { /* ignore */ }
       }
     } finally {
@@ -214,7 +214,7 @@ export default function Interview() {
 
   const mode = s.recording_mode === 'audio' ? 'audio' : 'video'
 
-  // Consent dewa hoyeche kintu shuru hoy ni: device check
+  // Consent granted but interview not yet started: conduct device verification
   if (s.status !== 'in_progress') {
     return wrap(
       <div className="card narrow">

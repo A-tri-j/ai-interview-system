@@ -1,5 +1,5 @@
 /* ---------- Theme colors ---------- */
-/* Dark: charcoal + warm gray + amber. Kono blue shade nai. */
+/* Dark: charcoal + warm gray + amber neutral palette */
 :root[data-theme='dark'] {
   color-scheme: dark;
   --bg: #141210;

@@ -17,7 +17,7 @@ export function SavedProvider({ children }) {
     return () => { alive = false }
   }, [cid])
 
-  // Error hole message dey, thik hole null
+  // Returns error message on failure, or null on success
   const toggle = useCallback(async (id) => {
     const was = ids.includes(id)
     setIds((p) => (was ? p.filter((x) => x !== id) : [...p, id]))

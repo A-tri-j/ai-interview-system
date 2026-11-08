@@ -16,7 +16,7 @@ export default function Login() {
   const [needsVerify, setNeedsVerify] = useState(false)
   const [busy, setBusy] = useState(false)
 
-  // Login hoye gele ba age-i login thakle: je page theke eshechilo shekhane pathai
+  // If authenticated: redirect to previous location or dashboard
   if (!loading && users.candidate) return <Navigate to={from} replace />
 
   const submit = async (e) => {

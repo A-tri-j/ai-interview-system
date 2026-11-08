@@ -7,7 +7,7 @@ export default function CvTopics({ target, onClose }) {
   const [d, setD] = useState(null)
   const [error, setError] = useState('')
   const [loading, setLoading] = useState(true)
-  const ran = useRef(false)   // StrictMode-e duibar AI call na hoy
+  const ran = useRef(false)   // Guard against duplicate execution under React StrictMode
 
   const load = async () => {
     setLoading(true)

@@ -78,7 +78,7 @@ export default function CompanyReport() {
 
   useEffect(() => { load() }, [load])
 
-  // Evaluation cholar somoy 8 second por por refresh
+  // Poll every 8 seconds while evaluation is ongoing
   const sstatus = d?.session?.status
   useEffect(() => {
     if (!['submitted', 'evaluating'].includes(sstatus)) return

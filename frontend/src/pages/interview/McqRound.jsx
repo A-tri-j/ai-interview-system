@@ -1,4 +1,4 @@
-// Round 2: 10 MCQ, 3 minute. Timer server-er deadline theke ashe, tai refresh-e reset hoy na.
+// Round 2: 10 MCQs, 3-minute limit. Tracks server deadline to prevent resets on page reload.
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import Alert from '../../components/Alert'
@@ -6,7 +6,7 @@ import ConfirmDialog from '../../components/ConfirmDialog'
 import Spinner from '../../components/Spinner'
 import { api, errorMessage } from '../../services/api'
 
-const LONG = { timeout: 180000 } // question toiri-te somoy lage
+const LONG = { timeout: 180000 } // Extended timeout for MCQ generation
 const base = (id) => `/api/mcq/${id}`
 const fmt = (s) => `${Math.floor(s / 60)}:${String(s % 60).padStart(2, '0')}`
 const LETTERS = ['A', 'B', 'C', 'D']
@@ -22,7 +22,7 @@ export default function McqRound() {
   const [cur, setCur] = useState(0)
   const [left, setLeft] = useState(0)
   const [confirm, setConfirm] = useState(false)
-  const endAt = useRef(0)           // performance.now() onujayi shesh somoy (clock bodlale kono somossa nei)
+  const endAt = useRef(0)           // Monotonic performance.now() deadline (immune to clock changes)
   const answersRef = useRef({})
   const submitting = useRef(false)
   const autoTried = useRef(false)
@@ -78,7 +78,7 @@ export default function McqRound() {
     }
   }, [applicationId, load])
 
-  // Countdown: protita 250ms-e server-er deadline theke hishab. 0 hole ekbar-i auto submit.
+  // Countdown computed every 250ms against server deadline. Auto-submits once remaining hits 0.
   useEffect(() => {
     if (s?.status !== 'in_progress') return
     const t = setInterval(() => {
@@ -92,7 +92,7 @@ export default function McqRound() {
     return () => clearInterval(t)
   }, [s?.status, doSubmit])
 
-  // Test cholar somoy tab bondho korte gele warning
+  // Warn candidate if attempting to close or navigate away from active test
   useEffect(() => {
     if (s?.status !== 'in_progress') return
     const h = (e) => { e.preventDefault(); e.returnValue = '' }
@@ -120,7 +120,7 @@ export default function McqRound() {
 
   const choose = (q, idx) => {
     setAnswers((p) => ({ ...p, [q.id]: idx }))
-    // Background-e save. Fail holeo submit-e shob answer abar jay.
+    // Background save. In case of network drops, answers are resubmitted on finalize.
     api.candidate.put(`${base(applicationId)}/answer`, { question_id: q.id, selected_index: idx }).catch(() => {})
   }
 

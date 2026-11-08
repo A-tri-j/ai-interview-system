@@ -3,7 +3,7 @@ import { useTheme } from '../hooks/useTheme'
 const ICON = { dark: '☾', light: '☀', aurora: '✦' }
 const NAME = { dark: 'Dark', light: 'Light', aurora: 'Aurora' }
 
-// simple = true hole shudhu dark/light (admin ar company area-r jonno)
+// simple = true toggles between dark/light only (for admin and company management portals)
 export default function ThemeToggle({ simple = false }) {
   const { theme, toggle } = useTheme()
   const list = simple ? ['dark', 'light'] : ['dark', 'light', 'aurora']

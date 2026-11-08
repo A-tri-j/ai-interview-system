@@ -29,7 +29,7 @@ export default function RetakePanel({ appId, onChanged }) {
     try {
       const { data } = await api.company.get(`/api/company/applications/${appId}/retake-info`)
       setInfo(data)
-    } catch { /* panel na ashleo page kaj korbe */ }
+    } catch { /* Fail gracefully if retake endpoint is unavailable */ }
   }, [appId])
 
   useEffect(() => { load() }, [load])

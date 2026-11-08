@@ -1,4 +1,4 @@
-// Label + input + error message ek jaygay. Input-ta children hishebe dite hobe.
+// Unified field component: label + input + error message in one place. Input passed as children.
 export default function Field({ id, label, error, hint, children }) {
   return (
     <div className="field">

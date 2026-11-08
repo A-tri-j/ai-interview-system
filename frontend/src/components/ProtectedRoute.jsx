@@ -1,4 +1,4 @@
-// Login chhara private page-e dhukte dey na. Backend-o alada kore check kore.
+// Guards private routes from unauthenticated users. Backend also enforces authorization checks.
 import { Navigate, useLocation } from 'react-router-dom'
 import { useAuth } from '../hooks/useAuth'
 import Spinner from './Spinner'

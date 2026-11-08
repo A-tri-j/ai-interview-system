@@ -94,7 +94,7 @@ export default function VacancyForm() {
         try {
           await api.company.post(`/api/company/vacancies/${vid}/publish`)
         } catch (err) {
-          // Save hoyeche, kintu publish hoy ni (jemon company approved na)
+          // Saved, but unpublished (e.g. company pending approval)
           navigate(`/company/vacancies/${vid}/edit`, { replace: true })
           setError(`Saved as draft, but not published: ${errorMessage(err)}`)
           setBusy(false)

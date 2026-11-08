@@ -103,7 +103,7 @@ export default function RecommendChat() {
         <form className="chat-input" onSubmit={send}>
           <label htmlFor="chat-q" className="sr-only">Describe the job you want</label>
           <input id="chat-q" value={input} onChange={(e) => setInput(e.target.value)} maxLength={300}
-            placeholder="e.g. remote React developer, or amar fresher er jonno internship chai" />
+            placeholder="e.g. Remote React developer, entry-level Python engineer, or paid internship" />
           <button className="btn btn-primary" disabled={busy || !input.trim()}>Send</button>
         </form>
       </section>

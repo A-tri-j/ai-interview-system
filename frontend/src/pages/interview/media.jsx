@@ -44,7 +44,7 @@ export function useMedia(mode) {
     }
   }, [mode, stop])
 
-  useEffect(() => stop, [stop]) // page chhere gele camera bondho
+  useEffect(() => stop, [stop]) // Release media devices on component unmount
   return { stream, error, asking, request, stop }
 }
 

@@ -10,7 +10,7 @@ import { api, errorMessage } from '../../services/api'
 const PAGE_SIZE = 20
 const score = (v) => (v == null ? '-' : Number(v).toFixed(1))
 
-// Score na thakle keno nei seta bole dei
+// Explains why score is unavailable if test is pending or incomplete
 function pending(status, kind) {
   if (kind === 'r1') {
     if (['submitted', 'evaluating'].includes(status)) return 'Evaluating'

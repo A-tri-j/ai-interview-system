@@ -23,7 +23,7 @@ export default function SavedTab() {
 
   if (error) return <Alert>{error}</Alert>
   if (!items) return <Spinner />
-  // Heart theke unsave korle sathe sathe list theke jay
+  // Optimistically remove from list when unbookmarked
   const list = items.filter((v) => ids.includes(v.id))
   if (list.length === 0) {
     return (

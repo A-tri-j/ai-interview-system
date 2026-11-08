@@ -1,4 +1,4 @@
-// Application status -> readable label + rong (ok = sobuj, bad = lal, warn = amber)
+// Application status -> user-friendly label + tone (ok = green, bad = red, warn = amber)
 const MAP = {
   submitted: ['Submitted', ''],
   under_review: ['Under review', ''],

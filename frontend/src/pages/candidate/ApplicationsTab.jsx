@@ -21,7 +21,7 @@ const HINT = {
   on_hold: 'The company has put your application on hold.',
   final_rejected: 'The company decided not to move forward after your interview.',
 }
-// Ei status-gulo-te interview session thake, tai result dekhano jay
+// Statuses where interview results are accessible to candidate
 const HAS_INTERVIEW = ['interview_completed', 'shortlisted', 'accepted', 'on_hold', 'final_rejected']
 
 function InterviewResult({ applicationId }) {

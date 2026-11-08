@@ -17,7 +17,7 @@ const STATUSES = [
   ['accepted', 'Accepted'], ['on_hold', 'On hold'], ['final_rejected', 'Final rejected'],
 ]
 
-// Backend-er BULK_FROM-er moto (shudhu button enable/disable-er jonno, asol check server-e)
+// Mirrors backend BULK_FROM transitions (client-side enable/disable, authoritative validation on server)
 const BULK = [
   { status: 'under_review', label: 'Mark under review', from: ['submitted'] },
   { status: 'rejected', label: 'Reject (before interview)', from: ['submitted', 'under_review'], danger: true },
@@ -111,7 +111,7 @@ export default function CompanyApplications() {
     }
   }
 
-  // CSV-r jonno Authorization header lage, tai blob hishebe nei
+  // Fetch CSV export with Authorization header as blob
   const exportCsv = async () => {
     setError('')
     setInfo('')

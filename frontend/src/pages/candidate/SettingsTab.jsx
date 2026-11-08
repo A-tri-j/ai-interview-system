@@ -31,7 +31,7 @@ function ChangePassword() {
       const { data } = await api.candidate.post('/api/candidates/me/change-password', {
         current_password: f.current, new_password: f.next, confirm_password: f.confirm,
       })
-      // Purano token batil hoye gese, backend notun token dey: logout hobe na
+      // Update access token after password change without logging out
       if (data.access_token) tokenStore.set('candidate', data.access_token)
       setOk('Password changed.')
       setF({ current: '', next: '', confirm: '' })

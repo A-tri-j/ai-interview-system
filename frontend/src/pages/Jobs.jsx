@@ -23,7 +23,7 @@ export default function Jobs() {
   const key = params.toString()
   const page = Math.max(1, parseInt(params.get('page') || '1', 10) || 1)
 
-  // Back/forward button-e URL bodlale form-o milie nei
+  // Sync state when navigating via browser back/forward buttons
   useEffect(() => { setForm(fromParams(new URLSearchParams(key))) }, [key])
 
   useEffect(() => {

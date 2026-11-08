@@ -6,7 +6,7 @@ import Field from '../components/Field'
 import Spinner from '../components/Spinner'
 import { api, errorMessage } from '../services/api'
 
-const MAX_MB = 5 // backend-er MAX_CV_MB-er shathe milte hobe
+const MAX_MB = 5 // Synchronized with backend MAX_CV_MB
 
 export function checkCv(file) {
   if (!file) return ''
@@ -42,7 +42,7 @@ export default function Apply() {
         setJob(j.data)
         const prof = p.data
         setSavedCv(prof.documents?.[0] || null)
-        // Profile theke form age-i bhore dei
+        // Pre-fill form from existing candidate profile
         setF((x) => ({
           ...x, applicant_name: prof.full_name || '', applicant_email: prof.email || '',
           applicant_phone: prof.phone || '', education: prof.education || '',

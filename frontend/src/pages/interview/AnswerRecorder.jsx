@@ -1,4 +1,4 @@
-// Ekta question-er answer: record, preview, upload (retry), skip.
+// Question response handler: record, preview, upload (retry), and skip.
 import { useCallback, useEffect, useRef, useState } from 'react'
 import Alert from '../../components/Alert'
 import { api, errorMessage } from '../../services/api'
@@ -7,7 +7,7 @@ import { LiveVideo, MicMeter } from './media'
 const MIN_SECONDS = 2
 const fmt = (t) => `${Math.floor(t / 60)}:${String(t % 60).padStart(2, '0')}`
 
-// Browser je format support kore sheta-i nei (Chrome=webm, Safari=mp4)
+// Select browser-supported format (Chrome=webm, Safari=mp4)
 function pickMime(mode) {
   if (typeof MediaRecorder === 'undefined') return null
   const list = mode === 'video'
@@ -28,7 +28,7 @@ export default function AnswerRecorder({ applicationId, question, index, total, 
   const chunks = useRef([])
   const canPause = typeof MediaRecorder !== 'undefined' && 'pause' in MediaRecorder.prototype
 
-  // Timer shudhu recording cholar somoy cholbe (pause-e thambe)
+  // Timer runs only during active recording (pauses when paused)
   useEffect(() => {
     if (rs !== 'recording') return
     const id = setInterval(() => setElapsed((t) => t + 1), 1000)
@@ -47,7 +47,7 @@ export default function AnswerRecorder({ applicationId, question, index, total, 
     if (r && r.state !== 'inactive') { r.onstop = null; r.stop() }
   }, [])
 
-  // Recording/upload cholar somoy tab bondho korte gele warning
+  // Warn candidate if attempting to close tab while recording/uploading
   useEffect(() => {
     if (rs === 'idle' && !uploading) return
     const h = (e) => { e.preventDefault(); e.returnValue = '' }
@@ -105,14 +105,14 @@ export default function AnswerRecorder({ applicationId, question, index, total, 
         `/api/interviews/${applicationId}/questions/${question.id}/answer`, body, { timeout: 180000 },
       )
       if (data.no_speech) {
-        setSilent(true) // kichu shona jay ni: abar record korte bolbo
+        setSilent(true) // No speech detected: prompt candidate to re-record
         discard()
         setSilent(true)
       } else {
         onDone(question.id)
       }
     } catch (e) {
-      // blob state-e ache, tai candidate shudhu "Upload" abar chapte pare
+      // Retain blob in state so candidate can retry uploading without re-recording
       setErr(`${errorMessage(e)} Your recording is kept. Tap "Upload answer" to try again.`)
     } finally {
       setUploading(false)

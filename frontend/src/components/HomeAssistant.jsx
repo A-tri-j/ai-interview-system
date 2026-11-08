@@ -1,5 +1,5 @@
-// Home page-er AI chat: CV upload -> CV % -> job suggestion -> filter -> search.
-// Backend: /api/recommend/* (ager job finder). Candidate login lagbe.
+// Home page AI chat assistant: CV upload -> Match % -> Job suggestions -> Filtering -> Search.
+// Powered by /api/recommend/*. Requires candidate authentication.
 import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import Alert from './Alert'
@@ -30,18 +30,18 @@ export default function HomeAssistant() {
   const { users, loading: authLoading } = useAuth()
   const candidate = users.candidate
 
-  const [saved, setSaved] = useState(undefined)   // undefined = jani na, null = CV nei, object = CV ache
+  const [saved, setSaved] = useState(undefined)   // undefined = unknown, null = no CV, object = CV exists
   const [analysis, setAnalysis] = useState(null)
   const [file, setFile] = useState(null)
   const [busy, setBusy] = useState('')            // '' | upload | analyse | search
   const [error, setError] = useState('')
-  const [want, setWant] = useState(null)          // null = jiggesh kora hoy ni, true / false
+  const [want, setWant] = useState(null)          // null = unprompted, true / false
   const [filters, setFilters] = useState(EMPTY)
   const [results, setResults] = useState(null)
   const [input, setInput] = useState('')
   const [loc, setLoc] = useState('')
 
-  // Login thakle: age CV upload kora ache kina (halka call, AI na)
+  // Check if candidate has an existing CV on file (lightweight profile call, no AI)
   useEffect(() => {
     if (!candidate) { setSaved(undefined); setAnalysis(null); setResults(null); setWant(null); return }
     let alive = true
@@ -116,7 +116,7 @@ export default function HomeAssistant() {
   const setLocation = (e) => { e.preventDefault(); search(null, { ...filters, location: loc.trim() || null }) }
   const clear = () => { setFilters(EMPTY); setResults(null); setLoc('') }
 
-  // ---------- CV theke suggestion ----------
+  // ---------- CV Suggestions ----------
   const skillChips = (analysis?.skills_found || []).slice(0, 6)
   const roleChips = [...new Set((analysis?.items || []).slice(0, 3).map((v) => v.title))]
   const q = analysis?.cv_quality

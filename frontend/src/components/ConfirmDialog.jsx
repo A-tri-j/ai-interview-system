@@ -1,5 +1,5 @@
-// Native <dialog>: Esc diye bondho hoy, keyboard focus dialog-er bhitor thake.
-// children dile message-er niche form-er jaygay boshe (jemon karon likhar box).
+// Native <dialog>: Closed on Esc, keyboard focus trapped inside modal.
+// When children are passed, rendered in place of the message (e.g. input for reason).
 import { useEffect, useRef } from 'react'
 
 export default function ConfirmDialog({

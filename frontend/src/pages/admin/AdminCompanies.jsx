@@ -25,7 +25,7 @@ export default function AdminCompanies() {
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState('')
   const [info, setInfo] = useState('')
-  const [open, setOpen] = useState(null)       // details khola company id
+  const [open, setOpen] = useState(null)       // Expanded company ID
   const [pending, setPending] = useState(null) // confirm-er opekkhay: { company, status, label, danger }
   const [busy, setBusy] = useState(false)
 

@@ -1,5 +1,4 @@
-// Backend-er shathe kotha bolar jaygay. Protita role-er alada axios instance ache,
-// jate candidate/company/admin-er token ekshathe thakleo mishe na jay.
+// HTTP API layer. Provides isolated Axios instances per role to prevent token collisions.
 import axios from 'axios'
 
 const BASE_URL = import.meta.env.VITE_API_URL || 'http://127.0.0.1:8000'
@@ -17,7 +16,7 @@ export const tokenStore = {
 }
 
 function make(role) {
-  // 60s timeout: prothom AI call-e model download hole somoy lage
+  // 60s timeout: accommodates initial model load during AI processing
   const instance = axios.create({ baseURL: BASE_URL, timeout: 60000 })
   if (role) {
     instance.interceptors.request.use((cfg) => {
@@ -28,7 +27,7 @@ function make(role) {
     instance.interceptors.response.use(
       (res) => res,
       (err) => {
-        // Token expire/batil hole logout kore dei
+        // Clear token on 401 Unauthorized
         if (err.response?.status === 401 && tokenStore.get(role)) {
           tokenStore.clear(role)
           window.dispatchEvent(new CustomEvent('auth:expired', { detail: role }))
@@ -41,13 +40,13 @@ function make(role) {
 }
 
 export const api = {
-  public: make(null),       // login lagbe na (vacancy list, login, register)
+  public: make(null),       // Public endpoints (vacancy list, login, register)
   candidate: make('candidate'),
   company: make('company'),
   admin: make('admin'),
 }
 
-// FastAPI-r error (string ba list) theke user-er jonno ekta message banay
+// Formats FastAPI validation errors into user-friendly strings
 export function errorMessage(err, fallback = 'Something went wrong. Please try again.') {
   if (err?.code === 'ERR_NETWORK') return 'Cannot reach the server. Check your connection.'
   if (err?.code === 'ECONNABORTED') return 'The request took too long. Please try again.'

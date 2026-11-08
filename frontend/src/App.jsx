@@ -42,7 +42,7 @@ import VerifyEmail from './pages/VerifyEmail'
 export default function App() {
   return (
     <Routes>
-      {/* Admin: alada layout, public header/footer nei */}
+      {/* Admin: dedicated layout without public header/footer */}
       <Route path="admin/login" element={<AdminLogin />} />
       <Route path="admin" element={<ProtectedRoute role="admin"><AdminLayout /></ProtectedRoute>}>
         <Route index element={<AdminDashboard />} />

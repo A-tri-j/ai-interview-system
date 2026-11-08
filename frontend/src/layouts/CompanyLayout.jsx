@@ -13,7 +13,7 @@ export default function CompanyLayout() {
   const company = users.company
   const { pathname } = useLocation()
 
-  // Admin approve korle jate notun status dekhay
+  // Reload company status to reflect admin approval or verification changes
   useEffect(() => { reload('company') }, [reload])
 
   const notice = NOTICE[company?.status]

@@ -31,7 +31,7 @@ function Password() {
       const { data } = await api.company.post('/api/company/change-password', {
         current_password: f.cur, new_password: f.next, confirm_password: f.conf,
       })
-      if (data.access_token) tokenStore.set('company', data.access_token) // logout hobe na
+      if (data.access_token) tokenStore.set('company', data.access_token) // Keep session active
       setOk('Password changed.')
       setF({ cur: '', next: '', conf: '' })
     } catch (err) {
