@@ -243,10 +243,30 @@ export default function Home() {
 
       {/* ---------------- FAQ ---------------- */}
       <section className="container section">
-        <Reveal><h2>Questions</h2></Reveal>
+        <Reveal>
+          <div className="section-head center">
+            <span className="eyebrow">Frequently Asked Questions</span>
+            <h2 style={{ marginTop: 8 }}>Got questions? We've got answers</h2>
+            <p className="muted" style={{ maxWidth: 560, margin: '8px auto 0' }}>
+              Learn how automated screening, AI evaluations, candidate privacy, and test retakes work on our platform.
+            </p>
+          </div>
+        </Reveal>
         <div className="faq">
-          {FAQ.map(([a, b]) => (
-            <details key={a} className="card"><summary>{a}</summary><p className="muted">{b}</p></details>
+          {FAQ.map(([q, a]) => (
+            <details key={q} className="faq-item">
+              <summary className="faq-summary">
+                <span className="faq-question">{q}</span>
+                <span className="faq-icon" aria-hidden="true">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                    <polyline points="6 9 12 15 18 9" />
+                  </svg>
+                </span>
+              </summary>
+              <div className="faq-answer">
+                <p>{a}</p>
+              </div>
+            </details>
           ))}
         </div>
       </section>
