@@ -1,6 +1,6 @@
 // Home page AI chat assistant: CV upload -> Match % -> Job suggestions -> Filtering -> Search.
 // Powered by /api/recommend/*. Requires candidate authentication.
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
 import Alert from './Alert'
 import Spinner from './Spinner'
@@ -33,6 +33,7 @@ export default function HomeAssistant() {
   const [saved, setSaved] = useState(undefined)   // undefined = unknown, null = no CV, object = CV exists
   const [analysis, setAnalysis] = useState(null)
   const [file, setFile] = useState(null)
+  const [dragOver, setDragOver] = useState(false)
   const [busy, setBusy] = useState('')            // '' | upload | analyse | search
   const [error, setError] = useState('')
   const [want, setWant] = useState(null)          // null = unprompted, true / false
@@ -40,6 +41,7 @@ export default function HomeAssistant() {
   const [results, setResults] = useState(null)
   const [input, setInput] = useState('')
   const [loc, setLoc] = useState('')
+  const fileInputRef = useRef(null)
 
   // Check if candidate has an existing CV on file (lightweight profile call, no AI)
   useEffect(() => {
@@ -66,9 +68,15 @@ export default function HomeAssistant() {
     }
   }
 
+  const handleFileSelect = (selectedFile) => {
+    setError('')
+    const msg = checkCv(selectedFile)
+    if (msg) return setError(msg)
+    setFile(selectedFile)
+  }
+
   const upload = async (e) => {
-    e.preventDefault()
-    const form = e.currentTarget
+    if (e && e.preventDefault) e.preventDefault()
     setError('')
     if (!file) return setError('Choose a PDF or DOCX file first.')
     const msg = checkCv(file)
@@ -80,7 +88,7 @@ export default function HomeAssistant() {
       await api.candidate.post('/api/candidates/me/cv', body)
       setSaved({ filename: file.name })
       setFile(null)
-      form.reset()
+      if (fileInputRef.current) fileInputRef.current.value = ''
       await analyse()
     } catch (err) {
       setError(errorMessage(err))
@@ -134,13 +142,22 @@ export default function HomeAssistant() {
 
       <div className="card assist-log" aria-live="polite">
         <Bot>
-          Hi! To start, please <strong>upload your CV</strong> (PDF or DOCX). I will tell you how complete it is and which open jobs match it.
+          <div className="bot-greeting">
+            <div className="bot-avatar-pill" aria-hidden="true">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                <path d="m12 3-1.9 5.8a2 2 0 0 1-1.3 1.3L3 12l5.8 1.9a2 2 0 0 1 1.3 1.3L12 21l1.9-5.8a2 2 0 0 1 1.3-1.3L21 12l-5.8-1.9a2 2 0 0 1-1.3-1.3Z"/>
+              </svg>
+            </div>
+            <div className="bot-greeting-text">
+              Hi! To get started, please <strong>upload or select your CV</strong> (PDF or DOCX). I will analyze its completeness, highlight your key skills, and find the highest-matching open jobs for you.
+            </div>
+          </div>
         </Bot>
 
         {/* ---- Login ---- */}
         {!authLoading && !candidate && (
           <Bot>
-            <p style={{ marginTop: 0 }}>Please sign in so I can read and save your CV safely.</p>
+            <p style={{ marginTop: 0 }}>Please sign in so I can safely read and store your CV.</p>
             <div className="row-actions">
               <Link to="/login" state={{ from: '/' }} className="btn btn-primary btn-sm">Sign in</Link>
               <Link to="/register" className="btn btn-ghost btn-sm">Create account</Link>
@@ -152,22 +169,142 @@ export default function HomeAssistant() {
         {candidate && !analysis && busy !== 'analyse' && (
           <Bot>
             {saved && (
-              <>
-                <p style={{ marginTop: 0 }}>I found your CV: <strong>{saved.filename}</strong>.</p>
-                <div className="row-actions" style={{ marginBottom: 12 }}>
-                  <button className="btn btn-primary btn-sm" onClick={analyse} disabled={Boolean(busy)}>Analyse this CV</button>
+              <div className="existing-cv-card">
+                <div className="cv-card-left">
+                  <div className="cv-icon-badge" aria-hidden="true">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                      <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                      <polyline points="14 2 14 8 20 8"/>
+                      <line x1="16" y1="13" x2="8" y2="13"/>
+                      <line x1="16" y1="17" x2="8" y2="17"/>
+                    </svg>
+                    <span className="ext">{saved.filename.split('.').pop()?.toUpperCase() || 'CV'}</span>
+                  </div>
+                  <div className="cv-meta">
+                    <div className="cv-title-row">
+                      <span className="cv-filename" title={saved.filename}>{saved.filename}</span>
+                      <span className="cv-status-tag">
+                        <span style={{ width: 6, height: 6, borderRadius: '50%', background: 'currentColor' }} />
+                        Saved on profile
+                      </span>
+                    </div>
+                    <span className="cv-subtitle">Ready to match with open vacancies</span>
+                  </div>
                 </div>
-                <p className="muted" style={{ marginBottom: 6 }}>Or upload a different one:</p>
-              </>
+
+                <button 
+                  type="button" 
+                  className="btn btn-primary btn-sm btn-analyse-cta" 
+                  onClick={analyse} 
+                  disabled={Boolean(busy)}
+                >
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                    <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2" />
+                  </svg>
+                  Analyse this CV
+                </button>
+              </div>
             )}
-            <form onSubmit={upload} className="assist-upload">
-              <label htmlFor="home-cv" className="sr-only">CV file</label>
-              <input id="home-cv" type="file" accept=".pdf,.docx" onChange={(e) => setFile(e.target.files?.[0] || null)} />
-              <button className="btn btn-primary btn-sm" disabled={busy === 'upload' || !file}>
-                {busy === 'upload' ? 'Uploading...' : 'Upload and analyse'}
-              </button>
-            </form>
-            <p className="muted" style={{ margin: '8px 0 0', fontSize: '0.85rem' }}>PDF or DOCX, max 5 MB. Text-based files work best. Scanned images cannot be read.</p>
+
+            {saved && (
+              <div className="cv-divider">
+                <span>OR UPLOAD A DIFFERENT CV</span>
+              </div>
+            )}
+
+            <div
+              className={`custom-dropzone ${dragOver ? 'drag-active' : ''} ${file ? 'has-file' : ''}`}
+              onDragOver={(e) => { e.preventDefault(); setDragOver(true) }}
+              onDragLeave={() => setDragOver(false)}
+              onDrop={(e) => {
+                e.preventDefault()
+                setDragOver(false)
+                const dropped = e.dataTransfer.files?.[0]
+                if (dropped) handleFileSelect(dropped)
+              }}
+              onClick={() => !file && fileInputRef.current?.click()}
+            >
+              <input
+                ref={fileInputRef}
+                id="home-cv"
+                type="file"
+                accept=".pdf,.docx"
+                style={{ display: 'none' }}
+                onChange={(e) => {
+                  const selected = e.target.files?.[0]
+                  if (selected) handleFileSelect(selected)
+                }}
+              />
+
+              {!file ? (
+                <div className="dropzone-empty">
+                  <div className="dropzone-cloud-icon" aria-hidden="true">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                      <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                      <polyline points="17 8 12 3 7 8" />
+                      <line x1="12" y1="3" x2="12" y2="15" />
+                    </svg>
+                  </div>
+                  <div className="dropzone-text">
+                    <span className="dropzone-main-text">
+                      <span className="dropzone-highlight">Click to browse</span> or drag and drop your file here
+                    </span>
+                    <span className="dropzone-sub-text">Supported formats: PDF or DOCX (Max 5 MB)</span>
+                  </div>
+                </div>
+              ) : (
+                <div className="file-selected-box">
+                  <div className="file-selected-left">
+                    <div className="cv-icon-badge" aria-hidden="true">
+                      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                        <polyline points="14 2 14 8 20 8"/>
+                      </svg>
+                      <span className="ext">{file.name.split('.').pop()?.toUpperCase() || 'CV'}</span>
+                    </div>
+                    <div className="cv-meta">
+                      <span className="file-selected-name" title={file.name}>{file.name}</span>
+                      <span className="file-selected-size">{(file.size / (1024 * 1024)).toFixed(2)} MB</span>
+                    </div>
+                  </div>
+
+                  <div className="file-selected-actions">
+                    <button
+                      type="button"
+                      className="btn-discard-file"
+                      onClick={(e) => {
+                        e.stopPropagation()
+                        setFile(null)
+                        if (fileInputRef.current) fileInputRef.current.value = ''
+                      }}
+                      title="Remove file"
+                      aria-label="Remove selected file"
+                    >
+                      ✕
+                    </button>
+                    <button
+                      type="button"
+                      className="btn btn-primary btn-sm btn-analyse-cta"
+                      disabled={busy === 'upload'}
+                      onClick={(e) => {
+                        e.stopPropagation()
+                        upload()
+                      }}
+                    >
+                      {busy === 'upload' ? 'Uploading...' : 'Upload & Analyse ⚡'}
+                    </button>
+                  </div>
+                </div>
+              )}
+            </div>
+
+            <div className="cv-privacy-hint">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                <rect width="18" height="11" x="3" y="11" rx="2" ry="2"/>
+                <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+              </svg>
+              <span>100% Private to you. Companies cannot view your CV until you apply. Scanned images cannot be read.</span>
+            </div>
           </Bot>
         )}
 
