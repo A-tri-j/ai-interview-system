@@ -3,7 +3,8 @@ import axios from 'axios'
 
 // Local backend: 'http://127.0.0.1:8000'
 // Production deployed backend on Render:
-const BASE_URL = import.meta.env.VITE_API_URL || 'https://ai-interview-system-u9po.onrender.com'
+const rawUrl = import.meta.env.VITE_API_URL || 'https://ai-interview-system-u9po.onrender.com'
+const BASE_URL = rawUrl.replace(/\/+$/, '')
 
 export const tokenStore = {
   get: (role) => {
