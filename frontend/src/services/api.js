@@ -1,7 +1,9 @@
 // HTTP API layer. Provides isolated Axios instances per role to prevent token collisions.
 import axios from 'axios'
 
-const BASE_URL = import.meta.env.VITE_API_URL || 'http://127.0.0.1:8000'
+// Local backend: 'http://127.0.0.1:8000'
+// Production deployed backend on Render:
+const BASE_URL = import.meta.env.VITE_API_URL || 'https://ai-interview-system-u9po.onrender.com'
 
 export const tokenStore = {
   get: (role) => {
